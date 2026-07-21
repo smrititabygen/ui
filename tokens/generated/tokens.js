@@ -1,107 +1,93 @@
-/**
- * Auto-generated — run `npm run sync` to update from Figma.
- *
- * Typed token constants for use in JavaScript contexts where CSS classes
- * don't apply: chart libraries (Recharts, Chart.js), canvas drawing,
- * dynamic inline styles, email templates, etc.
- *
- * Import: import { colors } from '@tabygen/ui/tokens'
- */
+/** Auto-generated — run npm run sync to update */
 export const colors = {
-  grey: {
-    100: "#f3f4f6",
-    200: "#e5e7eb",
-    300: "#d1d5db",
-    400: "#9ca3af",
-    500: "#6b7280",
-    600: "#4b5563",
-    700: "#374151",
-    800: "#1f2937",
-    900: "#111827"
+  "grey": {
+    "100": "#d8d8d8",
+    "200": "#b1b0b1",
+    "300": "#89898a",
+    "400": "#626263",
+    "500": "#3b3b3c",
+    "600": "#2f2f30",
+    "700": "#232324",
+    "800": "#181818",
+    "900": "#0c0c0c"
   },
-  slate: {
-    100: "#f1f5f9",
-    200: "#e2e8f0",
-    300: "#cbd5e1",
-    400: "#94a3b8",
-    500: "#64748b",
-    600: "#475569",
-    700: "#334155",
-    800: "#1e293b",
-    900: "#0f172a"
+  "slate": {
+    "100": "#dee0e3",
+    "200": "#bcc1c7",
+    "300": "#9ba3ac",
+    "400": "#798490",
+    "500": "#586574",
+    "600": "#46515d",
+    "700": "#353d46",
+    "800": "#23282e",
+    "900": "#121417"
   },
-  red: {
-    100: "#fee2e2",
-    200: "#fecaca",
-    300: "#fca5a5",
-    400: "#f87171",
-    500: "#ef4444",
-    600: "#dc2626",
-    700: "#b91c1c",
-    800: "#991b1b",
-    900: "#7f1d1d"
+  "blue": {
+    "100": "#cddff5",
+    "200": "#9bbfea",
+    "300": "#689fe0",
+    "400": "#367fd6",
+    "500": "#045fcb",
+    "600": "#034ca3",
+    "700": "#02397a",
+    "800": "#022651",
+    "900": "#011329"
   },
-  blue: {
-    100: "#dbeafe",
-    200: "#bfdbfe",
-    300: "#93c5fd",
-    400: "#60a5fa",
-    500: "#3b82f6",
-    600: "#2563eb",
-    700: "#1d4ed8",
-    800: "#1e40af",
-    900: "#1e3a8a"
+  "red": {
+    "100": "#ecd1d1",
+    "200": "#d9a4a4",
+    "300": "#c67676",
+    "400": "#b44949",
+    "500": "#a11b1b",
+    "600": "#811616",
+    "700": "#601010",
+    "800": "#400b0b",
+    "900": "#200505"
   },
-  violet: {
-    100: "#ede9fe",
-    200: "#ddd6fe",
-    300: "#c4b5fd",
-    400: "#a78bfa",
-    500: "#8b5cf6",
-    600: "#7c3aed",
-    700: "#6d28d9",
-    800: "#5b21b6",
-    900: "#4c1d95"
+  "yellow": {
+    "100": "#fff0d9",
+    "200": "#ffe1b3",
+    "300": "#ffd18d",
+    "400": "#ffc267",
+    "500": "#ffb341",
+    "600": "#cc8f34",
+    "700": "#996b27",
+    "800": "#66481a",
+    "900": "#33240d"
   },
-  yellow: {
-    100: "#fef9c3",
-    200: "#fef08a",
-    300: "#fde047",
-    400: "#facc15",
-    500: "#eab308",
-    600: "#ca8a04",
-    700: "#a16207",
-    800: "#854d0e",
-    900: "#713f12"
+  "green": {
+    "100": "#dff1db",
+    "200": "#bfe4b8",
+    "300": "#9fd694",
+    "400": "#7fc970",
+    "500": "#5fbb4c",
+    "600": "#4c963d",
+    "700": "#39702e",
+    "800": "#264b1f",
+    "900": "#13250f"
   },
-  green: {
-    100: "#dcfce7",
-    200: "#bbf7d0",
-    300: "#86efac",
-    400: "#4ade80",
-    500: "#22c55e",
-    600: "#16a34a",
-    700: "#15803d",
-    800: "#166534",
-    900: "#14532d"
+  "violet": {
+    "100": "#dbdcfa",
+    "200": "#b6b9f6",
+    "300": "#9295f1",
+    "400": "#6d72ed",
+    "500": "#494fe8",
+    "600": "#3a3fba",
+    "700": "#2c2f8b",
+    "800": "#1d205d",
+    "900": "#0f102e"
   }
 }
 
-/** Shorthand aliases for the most common semantic uses */
 export const semantic = {
-  primary: colors.violet[600],
-  primaryLight: colors.violet[100],
-  success: colors.green[500],
-  successLight: colors.green[100],
-  warning: colors.yellow[500],
-  warningLight: colors.yellow[100],
-  error: colors.red[500],
-  errorLight: colors.red[100],
-  info: colors.blue[500],
-  infoLight: colors.blue[100],
-  textDefault: colors.slate[900],
-  textMuted: colors.slate[500],
-  borderDefault: colors.slate[200],
-  surface: "#ffffff",
-  surfaceSubdued: colors.grey[100]
+  "primary": "#494fe8",
+  "primaryHover": "#3a3fba",
+  "secondary": "#045fcb",
+  "secondaryHover": "#034ca3",
+  "success": "#5fbb4c",
+  "error": "#a11b1b",
+  "warning": "#ffb341",
+  "textDefault": "#121417",
+  "textMuted": "#586574",
+  "borderDefault": "#bcc1c7"
 }

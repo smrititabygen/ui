@@ -1,115 +1,108 @@
 /** Auto-generated — run npm run sync to update */
 
 :root {
-  /* ── Grey ─────────────────────────────── */
-  --tg-color-grey-100: #f3f4f6;
-  --tg-color-grey-200: #e5e7eb;
-  --tg-color-grey-300: #d1d5db;
-  --tg-color-grey-400: #9ca3af;
-  --tg-color-grey-500: #6b7280;
-  --tg-color-grey-600: #4b5563;
-  --tg-color-grey-700: #374151;
-  --tg-color-grey-800: #1f2937;
-  --tg-color-grey-900: #111827;
+  /* ── Grey                         */
+  --tg-color-grey-100: #d8d8d8;
+  --tg-color-grey-200: #b1b0b1;
+  --tg-color-grey-300: #89898a;
+  --tg-color-grey-400: #626263;
+  --tg-color-grey-500: #3b3b3c;
+  --tg-color-grey-600: #2f2f30;
+  --tg-color-grey-700: #232324;
+  --tg-color-grey-800: #181818;
+  --tg-color-grey-900: #0c0c0c;
 
-  /* ── Slate ────────────────────────────── */
-  --tg-color-slate-100: #f1f5f9;
-  --tg-color-slate-200: #e2e8f0;
-  --tg-color-slate-300: #cbd5e1;
-  --tg-color-slate-400: #94a3b8;
-  --tg-color-slate-500: #64748b;
-  --tg-color-slate-600: #475569;
-  --tg-color-slate-700: #334155;
-  --tg-color-slate-800: #1e293b;
-  --tg-color-slate-900: #0f172a;
+  /* ── Slate                        */
+  --tg-color-slate-100: #dee0e3;
+  --tg-color-slate-200: #bcc1c7;
+  --tg-color-slate-300: #9ba3ac;
+  --tg-color-slate-400: #798490;
+  --tg-color-slate-500: #586574;
+  --tg-color-slate-600: #46515d;
+  --tg-color-slate-700: #353d46;
+  --tg-color-slate-800: #23282e;
+  --tg-color-slate-900: #121417;
 
-  /* ── Red ──────────────────────────────── */
-  --tg-color-red-100: #fee2e2;
-  --tg-color-red-200: #fecaca;
-  --tg-color-red-300: #fca5a5;
-  --tg-color-red-400: #f87171;
-  --tg-color-red-500: #ef4444;
-  --tg-color-red-600: #dc2626;
-  --tg-color-red-700: #b91c1c;
-  --tg-color-red-800: #991b1b;
-  --tg-color-red-900: #7f1d1d;
+  /* ── Blue                         */
+  --tg-color-blue-100: #cddff5;
+  --tg-color-blue-200: #9bbfea;
+  --tg-color-blue-300: #689fe0;
+  --tg-color-blue-400: #367fd6;
+  --tg-color-blue-500: #045fcb;
+  --tg-color-blue-600: #034ca3;
+  --tg-color-blue-700: #02397a;
+  --tg-color-blue-800: #022651;
+  --tg-color-blue-900: #011329;
 
-  /* ── Blue ─────────────────────────────── */
-  --tg-color-blue-100: #dbeafe;
-  --tg-color-blue-200: #bfdbfe;
-  --tg-color-blue-300: #93c5fd;
-  --tg-color-blue-400: #60a5fa;
-  --tg-color-blue-500: #3b82f6;
-  --tg-color-blue-600: #2563eb;
-  --tg-color-blue-700: #1d4ed8;
-  --tg-color-blue-800: #1e40af;
-  --tg-color-blue-900: #1e3a8a;
+  /* ── Red                          */
+  --tg-color-red-100: #ecd1d1;
+  --tg-color-red-200: #d9a4a4;
+  --tg-color-red-300: #c67676;
+  --tg-color-red-400: #b44949;
+  --tg-color-red-500: #a11b1b;
+  --tg-color-red-600: #811616;
+  --tg-color-red-700: #601010;
+  --tg-color-red-800: #400b0b;
+  --tg-color-red-900: #200505;
 
-  /* ── Violet (primary brand) ───────────── */
-  --tg-color-violet-100: #ede9fe;
-  --tg-color-violet-200: #ddd6fe;
-  --tg-color-violet-300: #c4b5fd;
-  --tg-color-violet-400: #a78bfa;
-  --tg-color-violet-500: #8b5cf6;
-  --tg-color-violet-600: #7c3aed;
-  --tg-color-violet-700: #6d28d9;
-  --tg-color-violet-800: #5b21b6;
-  --tg-color-violet-900: #4c1d95;
+  /* ── Yellow                       */
+  --tg-color-yellow-100: #fff0d9;
+  --tg-color-yellow-200: #ffe1b3;
+  --tg-color-yellow-300: #ffd18d;
+  --tg-color-yellow-400: #ffc267;
+  --tg-color-yellow-500: #ffb341;
+  --tg-color-yellow-600: #cc8f34;
+  --tg-color-yellow-700: #996b27;
+  --tg-color-yellow-800: #66481a;
+  --tg-color-yellow-900: #33240d;
 
-  /* ── Yellow ───────────────────────────── */
-  --tg-color-yellow-100: #fef9c3;
-  --tg-color-yellow-200: #fef08a;
-  --tg-color-yellow-300: #fde047;
-  --tg-color-yellow-400: #facc15;
-  --tg-color-yellow-500: #eab308;
-  --tg-color-yellow-600: #ca8a04;
-  --tg-color-yellow-700: #a16207;
-  --tg-color-yellow-800: #854d0e;
-  --tg-color-yellow-900: #713f12;
+  /* ── Green                        */
+  --tg-color-green-100: #dff1db;
+  --tg-color-green-200: #bfe4b8;
+  --tg-color-green-300: #9fd694;
+  --tg-color-green-400: #7fc970;
+  --tg-color-green-500: #5fbb4c;
+  --tg-color-green-600: #4c963d;
+  --tg-color-green-700: #39702e;
+  --tg-color-green-800: #264b1f;
+  --tg-color-green-900: #13250f;
 
-  /* ── Green ────────────────────────────── */
-  --tg-color-green-100: #dcfce7;
-  --tg-color-green-200: #bbf7d0;
-  --tg-color-green-300: #86efac;
-  --tg-color-green-400: #4ade80;
-  --tg-color-green-500: #22c55e;
-  --tg-color-green-600: #16a34a;
-  --tg-color-green-700: #15803d;
-  --tg-color-green-800: #166534;
-  --tg-color-green-900: #14532d;
-
+  /* ── Violet — primary brand       */
+  --tg-color-violet-100: #dbdcfa;
+  --tg-color-violet-200: #b6b9f6;
+  --tg-color-violet-300: #9295f1;
+  --tg-color-violet-400: #6d72ed;
+  --tg-color-violet-500: #494fe8;
+  --tg-color-violet-600: #3a3fba;
+  --tg-color-violet-700: #2c2f8b;
+  --tg-color-violet-800: #1d205d;
+  --tg-color-violet-900: #0f102e;
 }
 
 /*
- * Shadcn/ui compatibility
- *
- * Shadcn's tailwind.config.js uses `hsl(var(--primary))` etc., so these
- * variables must be raw HSL channel values (e.g. "262 83% 58%"), NOT hex.
- * These are derived from the brand palette above and updated manually
- * when running `npm run sync` produces new palette values.
- *
- * To update: after syncing tokens, check which --tg-color-* values changed
- * and recalculate the corresponding HSL channel values below.
+ * Shadcn/ui compatibility — raw HSL channel values, auto-computed from brand tokens.
+ * Shadcn's Tailwind config wraps these in hsl(), e.g. hsl(var(--primary)).
+ * Do not edit manually — regenerated by npm run sync.
  */
 :root {
-  --background: 0 0% 100%;              /* white */
-  --foreground: 222 47% 11%;            /* slate-900  */
-  --card: 0 0% 100%;
-  --card-foreground: 222 47% 11%;
-  --popover: 0 0% 100%;
-  --popover-foreground: 222 47% 11%;
-  --primary: 262 83% 58%;               /* violet-600 */
-  --primary-foreground: 0 0% 100%;
-  --secondary: 210 40% 96%;             /* slate-100  */
-  --secondary-foreground: 222 47% 11%;
-  --muted: 210 40% 96%;                 /* slate-100  */
-  --muted-foreground: 215 16% 47%;      /* slate-500  */
-  --accent: 250 100% 96%;              /* violet-100 */
-  --accent-foreground: 263 70% 50%;     /* violet-700 */
-  --destructive: 0 84% 60%;             /* red-500    */
+  --background:             0 0% 100%;
+  --foreground:             216 12% 8%;
+  --card:                   0 0% 100%;
+  --card-foreground:        216 12% 8%;
+  --popover:                0 0% 100%;
+  --popover-foreground:     216 12% 8%;
+  --primary:                238 78% 60%;
+  --primary-foreground:     0 0% 100%;
+  --secondary:              216 8% 88%;
+  --secondary-foreground:   216 12% 8%;
+  --muted:                  216 8% 88%;
+  --muted-foreground:       212 14% 40%;
+  --accent:                 238 76% 92%;
+  --accent-foreground:      238 52% 36%;
+  --destructive:            0 71% 37%;
   --destructive-foreground: 0 0% 100%;
-  --border: 214 32% 91%;               /* slate-200  */
-  --input: 214 32% 91%;
-  --ring: 262 83% 58%;                  /* violet-600 */
-  --radius: 0.5rem;
+  --border:                 213 9% 76%;
+  --input:                  213 9% 76%;
+  --ring:                   238 78% 60%;
+  --radius:                 0.5rem;
 }
