@@ -1,6 +1,6 @@
 {
   "name": "@tabygen/ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Tabygen global design system — brand tokens, Tailwind preset, and CSS variables for Shadcn/ui",
   "type": "module",
   "exports": {
