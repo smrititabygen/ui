@@ -1,0 +1,20 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "tabygen",
+  "homepage": "https://github.com/smrititabygen/ui",
+  "items": [
+    {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Tabygen button — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react) — the consuming project must also use Base UI, not Radix or React Aria.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "files": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}

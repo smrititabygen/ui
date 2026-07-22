@@ -103,6 +103,13 @@ and record whichever resolution is chosen in Section 5.
 4. **This document is a living record.** Any time scope expands — e.g. spacing or
    radius sync gets built — Section 2's entry moves up to Section 1, and this file
    gets updated in the same change. An out-of-date rulebook is worse than none.
+5. **Default policy for every component: keep shadcn's geometry as-is; only
+   color and font get checked against Figma.** This applies to all components
+   (Button, Input, Card, …), not case-by-case, unless a specific component gets an
+   explicit exception recorded in Section 5. In practice this usually means *no
+   geometry edits at all* — most components' color/font already flow through
+   Tailwind utility classes tied to the CSS variables in Section 1, so there's
+   nothing to change beyond confirming that's true.
 
 ---
 
@@ -115,7 +122,10 @@ independently reinventing padding/radius/gap choices.
 
 | Component | Property | Decision | Date/session |
 |---|---|---|---|
-| *(none yet)* | | | |
+| *(all components)* | Geometry | **Default policy established here:** shadcn's geometry is kept as-is for every component unless a specific exception is recorded below. See process rule 5. | color-token-sync milestone |
+| Button | Geometry (height/gap/padding/radius per size, font-weight, icon sizing) | Kept exactly as shadcn's default — no Figma geometry spec exists, and none was requested. First application of the default policy above. | color-token-sync milestone |
+| Button | Color | No changes needed — all variants already reference semantic CSS variables (`bg-primary`, `text-primary-foreground`, `bg-secondary`, `bg-destructive/10`, etc.), which are Figma-sourced via the token pipeline. | color-token-sync milestone |
+| Button | Font | No changes needed — inherits `font-sans` (Inter) from the base layer; no per-component override exists. | color-token-sync milestone |
 
 **Rule:** before setting a geometry value on any new component, check this table
 first for a related decision already made on a prior component (e.g. Input's radius

@@ -1,19 +1,19 @@
 # @tabygen/ui
 
-Tabygen's global design system — brand tokens today, with components and a shadcn-compatible registry planned, built once here and reused across every Tabygen product. See Status below for what's actually done, and [ARCHITECTURE.md](ARCHITECTURE.md) for the exact token flow end to end.
+Tabygen's global design system — brand tokens and a shadcn-compatible component registry, built once here and reused across every Tabygen product. See Status below for what's actually done, [ARCHITECTURE.md](ARCHITECTURE.md) for the exact token flow end to end, and [SKILL.md](SKILL.md) for how a product project actually consumes this (component inventory, pull commands).
 
 ## Status
 
-🟡 In progress. Tokens (light + dark) and the shadcn/Vite app shell are live; components have not been customized yet.
+🟡 In progress. Tokens (light + dark), the shadcn/Vite app shell, and the registry are live with one component (Button); most components still need to be added.
 
 | Piece | Status | Where |
 |---|---|---|
 | Design tokens (colors, light + dark) synced from Figma | ✅ Done | [`tokens/`](tokens/), [`scripts/sync-tokens.mjs`](scripts/sync-tokens.mjs) |
 | shadcn/ui installed in this repo (Vite + React + Base UI) | ✅ Done | [`components.json`](components.json), [`src/`](src/) |
 | Tokens wired into Tailwind v4 / shadcn CSS vars | ✅ Done | [`src/index.css`](src/index.css) |
-| Components customized to match Figma | ⬜ Not started | `src/components/ui/` (created by `npx shadcn add`) |
-| `registry.json` (makes this pullable by other projects) | ⬜ Not started | — |
-| `SKILL.md` documenting the system for consumers | ⬜ Not started | — |
+| Components customized to match Figma | 🟡 1 of many (Button) | [`SKILL.md`](SKILL.md) component inventory |
+| `registry.json` (makes this pullable by other projects) | ✅ Done | [`registry.json`](registry.json), [`public/r/`](public/r/) |
+| `SKILL.md` documenting the system for consumers | ✅ Done | [`SKILL.md`](SKILL.md) |
 | Test-pulled into a second project to confirm the loop works | ⬜ Not started | — |
 
 ## What's here today
@@ -76,9 +76,9 @@ Publishing happens automatically via [`.github/workflows/publish.yml`](.github/w
 
 1. ~~Install shadcn/ui in this repo~~ ✅ Done — Vite + React + Base UI, component source lands in `src/components/ui/` via `npx shadcn add <component>`.
 2. ~~Wire Figma tokens into shadcn's CSS variables~~ ✅ Done — `src/index.css` imports `tokens/generated/variables.css`, light + dark both resolved from Figma.
-3. **Customize each component to match Figma** — for each component, run `npx shadcn add <name>`, then edit the generated source in `src/components/ui/` so it matches the Tabygen Figma component exactly.
-4. **Set up `registry.json`** — turns this repo into a private shadcn registry so other projects can run `npx shadcn add <url>/button` and get *Tabygen's* button, not the generic shadcn one.
-5. **Write `SKILL.md`** — documents the system (what components exist, how to install, how tokens map to classes) for both humans and AI agents working in consuming projects.
-6. **Test-pull into a second project** (or `jindal-dtms`) — confirms the full loop (tokens → components → registry → consuming app) actually works end to end.
+3. **Customize each component to match Figma** — 🟡 in progress, see [`SKILL.md`](SKILL.md)'s component inventory for what's done (just Button so far). Default policy (see `TOKEN_RULEBOOK.md`): keep shadcn's geometry, only confirm color/font already resolve through Tabygen's tokens.
+4. ~~Set up `registry.json`~~ ✅ Done — [`registry.json`](registry.json) + `npm run registry:build` → [`public/r/`](public/r/), served via raw GitHub URLs for now (no separate hosting yet).
+5. ~~Write `SKILL.md`~~ ✅ Done — [`SKILL.md`](SKILL.md).
+6. **Test-pull into a second project** — confirms the full loop (tokens → components → registry → consuming app) actually works end to end. Both consuming projects will be initialized with Base UI to match this registry.
 
-Recommendation: take **one** component through the entire loop (install → customize → registry → pull into a second project) before customizing the rest, so a broken link in the chain surfaces after 1 component instead of 15.
+Component work now follows `/design-component` (in `~/.agents/skills/design-component/`) rather than the ad-hoc steps above.
