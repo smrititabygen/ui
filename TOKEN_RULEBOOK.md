@@ -126,6 +126,10 @@ independently reinventing padding/radius/gap choices.
 | Button | Geometry (height/gap/padding/radius per size, font-weight, icon sizing) | Kept exactly as shadcn's default — no Figma geometry spec exists, and none was requested. First application of the default policy above. | color-token-sync milestone |
 | Button | Color | No changes needed — all variants already reference semantic CSS variables (`bg-primary`, `text-primary-foreground`, `bg-secondary`, `bg-destructive/10`, etc.), which are Figma-sourced via the token pipeline. | color-token-sync milestone |
 | Button | Font | No changes needed — inherits `font-sans` (Inter) from the base layer; no per-component override exists. | color-token-sync milestone |
+| Input, Label, Textarea, Card, Badge, Separator, Checkbox, Switch | Geometry | Kept exactly as shadcn's default for all 8 — no Figma geometry spec exists for any of them. Second application of the default policy above. | batch-2 milestone |
+| Input, Label, Textarea, Card, Badge, Separator, Checkbox, Switch | Color | No changes needed for any of the 8 — all reference semantic CSS variables (`bg-card`, `border-input`, `bg-muted`, `bg-destructive/10`, `bg-primary`, `border-border`, etc.), Figma-sourced via the token pipeline. | batch-2 milestone |
+| Card | Font (`CardTitle`'s `font-heading` class) | Verified, not assumed: `--font-heading: var(--font-sans)` is aliased in `src/index.css:10`, so it resolves to Inter Variable — same as every other component, just via an extra alias hop. No edit needed, but flagged here since `font-heading` doesn't appear in any other component file. | batch-2 milestone |
+| Input, Label, Textarea, Badge, Separator, Checkbox, Switch | Font | No changes needed for any of the 7 — inherit `font-sans` (Inter) from the base layer; no per-component override exists. | batch-2 milestone |
 
 **Rule:** before setting a geometry value on any new component, check this table
 first for a related decision already made on a prior component (e.g. Input's radius

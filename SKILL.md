@@ -21,6 +21,14 @@ shadcn-default, per property).
 | Component | shadcn base | Customization | Registry file |
 |---|---|---|---|
 | [Button](src/components/ui/button.tsx) | Base UI (`@base-ui/react/button`) | Geometry kept as shadcn default (no Figma geometry spec); color and font already flow through Tabygen's CSS variables with no edits needed — see `TOKEN_RULEBOOK.md` Section 5 | [`public/r/button.json`](public/r/button.json) |
+| [Input](src/components/ui/input.tsx) | Base UI (`@base-ui/react/input`) | No edits needed — same as Button | [`public/r/input.json`](public/r/input.json) |
+| [Label](src/components/ui/label.tsx) | Plain HTML element, no primitive | No edits needed — same as Button | [`public/r/label.json`](public/r/label.json) |
+| [Textarea](src/components/ui/textarea.tsx) | Plain HTML element, no primitive | No edits needed — same as Button | [`public/r/textarea.json`](public/r/textarea.json) |
+| [Card](src/components/ui/card.tsx) | Plain HTML elements, no primitive | No edits needed — `font-heading` resolves via `--font-heading: var(--font-sans)` in `src/index.css`, confirmed Inter | [`public/r/card.json`](public/r/card.json) |
+| [Badge](src/components/ui/badge.tsx) | Base UI (`@base-ui/react` render/merge-props) | No edits needed — same as Button | [`public/r/badge.json`](public/r/badge.json) |
+| [Separator](src/components/ui/separator.tsx) | Base UI (`@base-ui/react/separator`) | No edits needed — same as Button | [`public/r/separator.json`](public/r/separator.json) |
+| [Checkbox](src/components/ui/checkbox.tsx) | Base UI (`@base-ui/react/checkbox`) | No edits needed — same as Button | [`public/r/checkbox.json`](public/r/checkbox.json) |
+| [Switch](src/components/ui/switch.tsx) | Base UI (`@base-ui/react/switch`) | No edits needed — same as Button | [`public/r/switch.json`](public/r/switch.json) |
 
 This table is the source of truth for what exists. If a component isn't listed here,
 it isn't in the registry yet — build it via `/design-component` in this repo first.

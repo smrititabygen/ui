@@ -1,4 +1,12 @@
 import { Button, buttonVariants } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Textarea } from "@/components/ui/textarea"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Separator } from "@/components/ui/separator"
+import { Checkbox } from "@/components/ui/checkbox"
+import { Switch } from "@/components/ui/switch"
 import type { VariantProps } from "class-variance-authority"
 import { ArrowRight, Download } from "lucide-react"
 
@@ -52,6 +60,50 @@ function App() {
         <Button size="icon" aria-label="Download">
           <Download />
         </Button>
+      </div>
+
+      <Separator className="my-8" />
+
+      <h2 className="text-lg font-semibold">Batch 2 — form + content primitives</h2>
+      <div className="mt-4 flex flex-wrap items-start gap-6">
+        <Card className="w-72">
+          <CardHeader>
+            <CardTitle>Card title</CardTitle>
+            <CardDescription>Card description text goes here.</CardDescription>
+          </CardHeader>
+          <CardContent className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="name">Name</Label>
+              <Input id="name" placeholder="Ada Lovelace" />
+            </div>
+            <div className="flex flex-col gap-1.5">
+              <Label htmlFor="bio">Bio</Label>
+              <Textarea id="bio" placeholder="Tell us about yourself" />
+            </div>
+            <div className="flex items-center gap-2">
+              <Checkbox id="agree" />
+              <Label htmlFor="agree">I agree to the terms</Label>
+            </div>
+            <div className="flex items-center gap-2">
+              <Switch id="notify" />
+              <Label htmlFor="notify">Enable notifications</Label>
+            </div>
+          </CardContent>
+          <CardFooter className="gap-2">
+            <Button size="sm">Save</Button>
+            <Button size="sm" variant="outline">Cancel</Button>
+          </CardFooter>
+        </Card>
+
+        <div className="flex flex-col gap-3">
+          <div className="flex flex-wrap gap-2">
+            <Badge>default</Badge>
+            <Badge variant="secondary">secondary</Badge>
+            <Badge variant="outline">outline</Badge>
+            <Badge variant="destructive">destructive</Badge>
+            <Badge variant="ghost">ghost</Badge>
+          </div>
+        </div>
       </div>
     </main>
   )
