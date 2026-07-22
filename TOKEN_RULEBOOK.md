@@ -166,6 +166,10 @@ independently reinventing padding/radius/gap choices.
 | Input Group, Command, Combobox, Breadcrumb, Navigation Menu, Calendar, Sheet, Pagination, Empty, Spinner | Geometry/Color/Font | Kept exactly as shadcn's default for all 10 — no changes needed, same pattern as every batch before. Fifth application of the default policy above. | batch-5 milestone |
 | Calendar, Sheet, Pagination | Structure (not geometry/color/font) | All three import Tabygen's own `Button` internally, registered with `registryDependencies: ["button"]`. Command and Combobox similarly depend on `input-group` (itself depending on `button`, `input`, `textarea`) — first multi-level registryDependencies chain in the registry. | batch-5 milestone |
 | *(shadcn's `date-picker`)* | Not a component | `npx shadcn add date-picker` failed — it isn't a real registry item in the current shadcn CLI, just a documentation pattern composing Calendar + Popover. Not added; documented in `SKILL.md` so this isn't rediscovered as a bug later. | batch-5 milestone |
+| Drawer, Collapsible, Scroll Area, Context Menu, Hover Card, Kbd, Field, Item, Button Group | Geometry/Color/Font | Kept exactly as shadcn's default for all 9 — no changes needed. Sixth application of the default policy above. | batch-6 milestone |
+| Scroll Area | Structure (not geometry/color/font) | Fixed an unused `React` import that broke `tsc --noEmit` — a real bug in shadcn's own shipped source, unrelated to tokens. Not a design decision, just a build fix. | batch-6 milestone |
+| Field, Item, Button Group | Structure (not geometry/color/font) | All three import Tabygen's own `Label`/`Separator` internally, registered with `registryDependencies`. | batch-6 milestone |
+| *(shadcn's `data-table`)* | Not a component | `npx shadcn add data-table` failed — same situation as `date-picker`: a composed pattern (Table + TanStack Table), not a standalone registry item. Not added. | batch-6 milestone |
 
 **Rule:** before setting a geometry value on any new component, check this table
 first for a related decision already made on a prior component (e.g. Input's radius

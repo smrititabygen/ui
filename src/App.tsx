@@ -35,8 +35,17 @@ import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescri
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"
 import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty"
 import { Spinner } from "@/components/ui/spinner"
+import { Drawer, DrawerTrigger, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/components/ui/drawer"
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@/components/ui/collapsible"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { ContextMenu, ContextMenuTrigger, ContextMenuContent, ContextMenuItem } from "@/components/ui/context-menu"
+import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card"
+import { Kbd } from "@/components/ui/kbd"
+import { Field, FieldLabel, FieldDescription } from "@/components/ui/field"
+import { Item, ItemMedia, ItemContent, ItemTitle, ItemDescription } from "@/components/ui/item"
+import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
 import type { VariantProps } from "class-variance-authority"
-import { ArrowRight, Download, Bold, Italic, Underline, Inbox } from "lucide-react"
+import { ArrowRight, Download, Bold, Italic, Underline, Inbox, User } from "lucide-react"
 
 // Dev smoke test, not a real component-showcase page — renders the full variant x size
 // matrix to confirm they're independent props (any variant combines with any size),
@@ -376,6 +385,80 @@ function App() {
             <EmptyDescription>You're all caught up.</EmptyDescription>
           </EmptyHeader>
         </Empty>
+      </div>
+
+      <Separator className="my-8" />
+
+      <h2 className="text-lg font-semibold">Batch 6 — layout, menus, forms, lists</h2>
+      <div className="mt-4 flex flex-wrap items-start gap-6">
+        <div className="flex flex-col gap-4">
+          <Drawer>
+            <DrawerTrigger render={<Button variant="outline">Open drawer</Button>} />
+            <DrawerContent>
+              <DrawerHeader>
+                <DrawerTitle>Drawer title</DrawerTitle>
+                <DrawerDescription>Drawer description text.</DrawerDescription>
+              </DrawerHeader>
+            </DrawerContent>
+          </Drawer>
+
+          <Collapsible className="w-64">
+            <CollapsibleTrigger render={<Button variant="ghost">Toggle section</Button>} />
+            <CollapsibleContent className="px-2 py-2 text-sm text-muted-foreground">
+              Collapsible content revealed here.
+            </CollapsibleContent>
+          </Collapsible>
+
+          <ContextMenu>
+            <ContextMenuTrigger className="flex h-16 w-64 items-center justify-center rounded-lg border text-sm text-muted-foreground">
+              Right-click here
+            </ContextMenuTrigger>
+            <ContextMenuContent>
+              <ContextMenuItem>Edit</ContextMenuItem>
+              <ContextMenuItem variant="destructive">Delete</ContextMenuItem>
+            </ContextMenuContent>
+          </ContextMenu>
+
+          <HoverCard>
+            <HoverCardTrigger render={<Button variant="link">Hover me</Button>} />
+            <HoverCardContent>Preview content shown on hover.</HoverCardContent>
+          </HoverCard>
+
+          <div className="flex items-center gap-2">
+            <Kbd>Ctrl</Kbd>
+            <Kbd>K</Kbd>
+          </div>
+        </div>
+
+        <ScrollArea className="h-40 w-48 rounded-lg border">
+          <div className="p-3 flex flex-col gap-2 text-sm">
+            {Array.from({ length: 12 }, (_, i) => <div key={i}>Row {i + 1}</div>)}
+          </div>
+        </ScrollArea>
+
+        <Field className="w-64">
+          <FieldLabel htmlFor="email">Email</FieldLabel>
+          <Input id="email" placeholder="you@tabygen.com" />
+          <FieldDescription>We'll never share your email.</FieldDescription>
+        </Field>
+
+        <div className="flex flex-col gap-3 w-72">
+          <Item variant="outline">
+            <ItemMedia variant="icon"><User /></ItemMedia>
+            <ItemContent>
+              <ItemTitle>Ada Lovelace</ItemTitle>
+              <ItemDescription>ada@tabygen.com</ItemDescription>
+            </ItemContent>
+          </Item>
+
+          <ButtonGroup>
+            <Button variant="outline">Left</Button>
+            <ButtonGroupSeparator />
+            <Button variant="outline">Middle</Button>
+            <ButtonGroupSeparator />
+            <Button variant="outline">Right</Button>
+          </ButtonGroup>
+        </div>
       </div>
     </main>
   )

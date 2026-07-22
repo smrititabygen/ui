@@ -57,6 +57,15 @@ shadcn-default, per property).
 | [Pagination](src/components/ui/pagination.tsx) | Plain HTML + Tabygen Button | No edits needed | [`public/r/pagination.json`](public/r/pagination.json) |
 | [Empty](src/components/ui/empty.tsx) | Plain HTML elements, no primitive | No edits needed | [`public/r/empty.json`](public/r/empty.json) |
 | [Spinner](src/components/ui/spinner.tsx) | Lucide `Loader2Icon`, no primitive | No edits needed — uses `currentColor`, no separate color token | [`public/r/spinner.json`](public/r/spinner.json) |
+| [Drawer](src/components/ui/drawer.tsx) | Base UI (`@base-ui/react/drawer`) | No edits needed | [`public/r/drawer.json`](public/r/drawer.json) |
+| [Collapsible](src/components/ui/collapsible.tsx) | Base UI (`@base-ui/react/collapsible`) | No edits needed | [`public/r/collapsible.json`](public/r/collapsible.json) |
+| [Scroll Area](src/components/ui/scroll-area.tsx) | Base UI (`@base-ui/react/scroll-area`) | One unused-import fix (`React`, unrelated to tokens — a real bug in shadcn's own shipped source, broke `tsc --noEmit`) | [`public/r/scroll-area.json`](public/r/scroll-area.json) |
+| [Context Menu](src/components/ui/context-menu.tsx) | Base UI (`@base-ui/react/context-menu`) | No edits needed | [`public/r/context-menu.json`](public/r/context-menu.json) |
+| [Hover Card](src/components/ui/hover-card.tsx) | Base UI (`@base-ui/react/preview-card`) | No edits needed | [`public/r/hover-card.json`](public/r/hover-card.json) |
+| [Kbd](src/components/ui/kbd.tsx) | Plain HTML element, no primitive | No edits needed | [`public/r/kbd.json`](public/r/kbd.json) |
+| [Field](src/components/ui/field.tsx) | Plain HTML + Tabygen Label/Separator | No edits needed | [`public/r/field.json`](public/r/field.json) |
+| [Item](src/components/ui/item.tsx) | Base UI (`@base-ui/react` render/merge-props) + Tabygen Separator | No edits needed | [`public/r/item.json`](public/r/item.json) |
+| [Button Group](src/components/ui/button-group.tsx) | Base UI (`@base-ui/react` render/merge-props) + Tabygen Separator | No edits needed | [`public/r/button-group.json`](public/r/button-group.json) |
 
 This table is the source of truth for what exists. If a component isn't listed here,
 it isn't in the registry yet — build it via `/design-component` in this repo first.

@@ -4,14 +4,14 @@ Tabygen's global design system — brand tokens and a shadcn-compatible componen
 
 ## Status
 
-🟡 In progress. Tokens (light + dark), the shadcn/Vite app shell, and the registry are live with 37 components (chat-specific components — Bubble, Message, Message Scroller, Marker, Attachment — intentionally skipped for now); see [`SKILL.md`](SKILL.md)'s component inventory for the full list.
+🟡 In progress. Tokens (light + dark), the shadcn/Vite app shell, and the registry are live with 47 components (chat-specific components — Bubble, Message, Message Scroller, Marker, Attachment — intentionally skipped for now); see [`SKILL.md`](SKILL.md)'s component inventory for the full list.
 
 | Piece | Status | Where |
 |---|---|---|
 | Design tokens (colors, light + dark) synced from Figma | ✅ Done | [`tokens/`](tokens/), [`scripts/sync-tokens.mjs`](scripts/sync-tokens.mjs) |
 | shadcn/ui installed in this repo (Vite + React + Base UI) | ✅ Done | [`components.json`](components.json), [`src/`](src/) |
 | Tokens wired into Tailwind v4 / shadcn CSS vars | ✅ Done | [`src/index.css`](src/index.css) |
-| Components customized to match Figma | 🟡 37 done — see [`SKILL.md`](SKILL.md) component inventory | [`SKILL.md`](SKILL.md) component inventory |
+| Components customized to match Figma | 🟡 47 done — see [`SKILL.md`](SKILL.md) component inventory | [`SKILL.md`](SKILL.md) component inventory |
 | `registry.json` (makes this pullable by other projects) | ✅ Done | [`registry.json`](registry.json), [`public/r/`](public/r/) |
 | `SKILL.md` documenting the system for consumers | ✅ Done | [`SKILL.md`](SKILL.md) |
 | Test-pulled into a second project to confirm the loop works | ⬜ Not started | — |
@@ -76,7 +76,7 @@ Publishing happens automatically via [`.github/workflows/publish.yml`](.github/w
 
 1. ~~Install shadcn/ui in this repo~~ ✅ Done — Vite + React + Base UI, component source lands in `src/components/ui/` via `npx shadcn add <component>`.
 2. ~~Wire Figma tokens into shadcn's CSS variables~~ ✅ Done — `src/index.css` imports `tokens/generated/variables.css`, light + dark both resolved from Figma.
-3. **Customize each component to match Figma** — 🟡 in progress, 37 done — see [`SKILL.md`](SKILL.md)'s component inventory for the full list. Default policy (see `TOKEN_RULEBOOK.md`): keep shadcn's geometry, only confirm color/font already resolve through Tabygen's tokens (Slider's thumb was the first real exception — see `TOKEN_RULEBOOK.md` Section 5).
+3. **Customize each component to match Figma** — 🟡 in progress, 47 done — see [`SKILL.md`](SKILL.md)'s component inventory for the full list. Default policy (see `TOKEN_RULEBOOK.md`): keep shadcn's geometry, only confirm color/font already resolve through Tabygen's tokens (Slider's thumb was the first real exception — see `TOKEN_RULEBOOK.md` Section 5).
 4. ~~Set up `registry.json`~~ ✅ Done — [`registry.json`](registry.json) + `npm run registry:build` → [`public/r/`](public/r/), reachable via raw GitHub URLs now that this repo is public (verified working).
 5. ~~Write `SKILL.md`~~ ✅ Done — [`SKILL.md`](SKILL.md).
 6. **Test-pull into a second project** — confirms the full loop (tokens → components → registry → consuming app) actually works end to end. Both consuming projects will be initialized with Base UI to match this registry.

@@ -492,6 +492,126 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "Tabygen drawer — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react/drawer).",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "Tabygen collapsible — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react/collapsible).",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "Tabygen scroll area — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react/scroll-area).",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "context-menu",
+      "type": "registry:ui",
+      "title": "Context Menu",
+      "description": "Tabygen context menu — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react/context-menu).",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/context-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "hover-card",
+      "type": "registry:ui",
+      "title": "Hover Card",
+      "description": "Tabygen hover card — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react/preview-card).",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/hover-card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "kbd",
+      "type": "registry:ui",
+      "title": "Kbd",
+      "description": "Tabygen kbd — shadcn geometry, Tabygen brand colors and font. Plain HTML element, no external primitive.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/kbd.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "field",
+      "type": "registry:ui",
+      "title": "Field",
+      "description": "Tabygen field — shadcn geometry, Tabygen brand colors and font. Uses the Tabygen Label and Separator internally.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["label", "separator"],
+      "files": [
+        {
+          "path": "src/components/ui/field.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "item",
+      "type": "registry:ui",
+      "title": "Item",
+      "description": "Tabygen item — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react render/merge-props). Uses the Tabygen Separator internally.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["separator"],
+      "files": [
+        {
+          "path": "src/components/ui/item.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button-group",
+      "type": "registry:ui",
+      "title": "Button Group",
+      "description": "Tabygen button group — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react render/merge-props). Uses the Tabygen Separator internally.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["separator"],
+      "files": [
+        {
+          "path": "src/components/ui/button-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }
