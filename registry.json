@@ -612,6 +612,130 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "registry:ui",
+      "title": "Aspect Ratio",
+      "description": "Tabygen aspect ratio — shadcn geometry. Plain HTML element, no color/font surface at all (just a layout primitive).",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/aspect-ratio.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "direction",
+      "type": "registry:ui",
+      "title": "Direction",
+      "description": "Tabygen direction provider — re-exports Base UI's DirectionProvider/useDirection for RTL support. No color/font surface.",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/direction.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input-otp",
+      "type": "registry:ui",
+      "title": "Input OTP",
+      "description": "Tabygen OTP input — shadcn geometry, Tabygen brand colors and font. Built on the input-otp library.",
+      "dependencies": ["input-otp", "lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/input-otp.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "native-select",
+      "type": "registry:ui",
+      "title": "Native Select",
+      "description": "Tabygen native select — shadcn geometry, Tabygen brand colors and font. Plain HTML <select>. Options/optgroups intentionally use CSS system-color keywords (Canvas/CanvasText), not brand hex, since browsers don't allow custom-styling native dropdown popups.",
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/native-select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Tabygen resizable panels — shadcn geometry, Tabygen brand colors. Built on react-resizable-panels.",
+      "dependencies": ["react-resizable-panels"],
+      "files": [
+        {
+          "path": "src/components/ui/resizable.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "carousel",
+      "type": "registry:ui",
+      "title": "Carousel",
+      "description": "Tabygen carousel — shadcn geometry, Tabygen brand colors and font. Built on embla-carousel-react. Uses the Tabygen Button internally for prev/next controls.",
+      "dependencies": ["embla-carousel-react", "lucide-react"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/components/ui/carousel.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "Tabygen chart — shadcn geometry, Tabygen brand colors (grid/tooltip/legend chrome via --border/--muted-foreground/--background). Built on recharts. Per-series data colors are caller-supplied via ChartConfig, not Figma-sourced (no chart color tokens exist in Figma yet — see TOKEN_RULEBOOK.md).",
+      "dependencies": ["recharts"],
+      "files": [
+        {
+          "path": "src/components/ui/chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "menubar",
+      "type": "registry:ui",
+      "title": "Menubar",
+      "description": "Tabygen menubar — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react/menubar). Reuses the Tabygen Dropdown Menu internally.",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["dropdown-menu"],
+      "files": [
+        {
+          "path": "src/components/ui/menubar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sidebar",
+      "type": "registry:ui",
+      "title": "Sidebar",
+      "description": "Tabygen sidebar — shadcn geometry. Uses shadcn's own --sidebar-* CSS variables (background, foreground, accent, border, ring), which have no Figma equivalent yet — flagged as a known gap in TOKEN_RULEBOOK.md Section 3, not silently invented. Uses the Tabygen Button, Input, Separator, Sheet, Skeleton, and Tooltip internally.",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "lucide-react"],
+      "registryDependencies": ["button", "input", "separator", "sheet", "skeleton", "tooltip"],
+      "files": [
+        {
+          "path": "src/components/ui/sidebar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "src/hooks/use-mobile.ts",
+          "type": "registry:hook"
+        }
+      ]
     }
   ]
 }

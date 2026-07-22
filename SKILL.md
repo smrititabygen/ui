@@ -66,9 +66,27 @@ shadcn-default, per property).
 | [Field](src/components/ui/field.tsx) | Plain HTML + Tabygen Label/Separator | No edits needed | [`public/r/field.json`](public/r/field.json) |
 | [Item](src/components/ui/item.tsx) | Base UI (`@base-ui/react` render/merge-props) + Tabygen Separator | No edits needed | [`public/r/item.json`](public/r/item.json) |
 | [Button Group](src/components/ui/button-group.tsx) | Base UI (`@base-ui/react` render/merge-props) + Tabygen Separator | No edits needed | [`public/r/button-group.json`](public/r/button-group.json) |
+| [Aspect Ratio](src/components/ui/aspect-ratio.tsx) | Plain HTML element, no primitive | No edits needed — pure layout, no color/font surface | [`public/r/aspect-ratio.json`](public/r/aspect-ratio.json) |
+| [Direction](src/components/ui/direction.tsx) | Re-exports Base UI's `DirectionProvider`/`useDirection` | No edits needed — RTL support, no color/font surface | [`public/r/direction.json`](public/r/direction.json) |
+| [Input OTP](src/components/ui/input-otp.tsx) | `input-otp` library | No edits needed | [`public/r/input-otp.json`](public/r/input-otp.json) |
+| [Native Select](src/components/ui/native-select.tsx) | Plain HTML `<select>` | No edits needed. Options/optgroups intentionally use CSS system colors (`Canvas`/`CanvasText`), not brand hex — browsers don't allow custom styling of native dropdown popups | [`public/r/native-select.json`](public/r/native-select.json) |
+| [Resizable](src/components/ui/resizable.tsx) | `react-resizable-panels` | No edits needed. Note: current API uses an `orientation` prop (`"horizontal"`/`"vertical"`), not `direction` like older versions | [`public/r/resizable.json`](public/r/resizable.json) |
+| [Carousel](src/components/ui/carousel.tsx) | `embla-carousel-react` + Tabygen Button | No edits needed | [`public/r/carousel.json`](public/r/carousel.json) |
+| [Chart](src/components/ui/chart.tsx) | `recharts` | No edits needed — grid/tooltip/legend chrome uses `--border`/`--muted-foreground`/`--background`. Per-series data colors are caller-supplied via `ChartConfig` (e.g. `color: "var(--primary)"`), not Figma-sourced — no chart-color tokens exist in Figma yet | [`public/r/chart.json`](public/r/chart.json) |
+| [Menubar](src/components/ui/menubar.tsx) | Base UI (`@base-ui/react/menubar`) + Tabygen Dropdown Menu | No edits needed | [`public/r/menubar.json`](public/r/menubar.json) |
+| [Sidebar](src/components/ui/sidebar.tsx) | Base UI + Tabygen Button/Input/Separator/Sheet/Skeleton/Tooltip | Uses shadcn's own `--sidebar-*` variables (already defined in `src/index.css` as shadcn's greyscale defaults) — this is `TOKEN_RULEBOOK.md` Section 3's pre-existing, already-documented gap (no Figma sidebar tokens exist), not a new issue introduced here. Bundles `src/hooks/use-mobile.ts` as a second registry file | [`public/r/sidebar.json`](public/r/sidebar.json) |
 
 This table is the source of truth for what exists. If a component isn't listed here,
 it isn't in the registry yet — build it via `/design-component` in this repo first.
+
+**Coverage:** 56 components — the full shadcn catalog except: chat-specific
+components (Bubble, Message, Message Scroller, Marker, Attachment — skipped as
+out of scope), Toast (superseded by Sonner, not re-added), and Typography (a
+docs page of prose `className` patterns, not an actual component). Also not
+present because they aren't real standalone registry items in the current
+shadcn CLI — they're composed patterns documented instead of copy-pasted:
+**Date Picker** (compose `Calendar` + `Popover` yourself) and **Data Table**
+(compose `Table` + TanStack Table yourself).
 
 ## Pulling a component into a product project
 

@@ -44,8 +44,23 @@ import { Kbd } from "@/components/ui/kbd"
 import { Field, FieldLabel, FieldDescription } from "@/components/ui/field"
 import { Item, ItemMedia, ItemContent, ItemTitle, ItemDescription } from "@/components/ui/item"
 import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
+import { AspectRatio } from "@/components/ui/aspect-ratio"
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel"
+import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "@/components/ui/input-otp"
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select"
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable"
+import { Menubar, MenubarMenu, MenubarTrigger, MenubarContent, MenubarItem } from "@/components/ui/menubar"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import type { VariantProps } from "class-variance-authority"
 import { ArrowRight, Download, Bold, Italic, Underline, Inbox, User } from "lucide-react"
+
+const chartData = [
+  { month: "Jan", value: 42 },
+  { month: "Feb", value: 68 },
+  { month: "Mar", value: 51 },
+]
+const chartConfig = { value: { label: "Value", color: "var(--primary)" } } satisfies ChartConfig
 
 // Dev smoke test, not a real component-showcase page — renders the full variant x size
 // matrix to confirm they're independent props (any variant combines with any size),
@@ -459,6 +474,65 @@ function App() {
             <Button variant="outline">Right</Button>
           </ButtonGroup>
         </div>
+      </div>
+
+      <Separator className="my-8" />
+
+      <h2 className="text-lg font-semibold">Batch 7 (final) — media, data, layout</h2>
+      <div className="mt-4 flex flex-wrap items-start gap-6">
+        <div className="flex flex-col gap-4">
+          <AspectRatio ratio={16 / 9} className="w-48 rounded-lg bg-muted" />
+
+          <Carousel className="w-48">
+            <CarouselContent>
+              <CarouselItem className="flex h-24 items-center justify-center rounded-lg bg-muted text-sm">Slide 1</CarouselItem>
+              <CarouselItem className="flex h-24 items-center justify-center rounded-lg bg-muted text-sm">Slide 2</CarouselItem>
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+
+          <InputOTP maxLength={4}>
+            <InputOTPGroup>
+              <InputOTPSlot index={0} />
+              <InputOTPSlot index={1} />
+              <InputOTPSlot index={2} />
+              <InputOTPSlot index={3} />
+            </InputOTPGroup>
+          </InputOTP>
+        </div>
+
+        <ChartContainer config={chartConfig} className="w-64 h-40">
+          <BarChart data={chartData}>
+            <CartesianGrid vertical={false} />
+            <XAxis dataKey="month" tickLine={false} axisLine={false} />
+            <ChartTooltip content={<ChartTooltipContent />} />
+            <Bar dataKey="value" fill="var(--color-value)" radius={4} />
+          </BarChart>
+        </ChartContainer>
+
+        <div className="flex flex-col gap-4">
+          <NativeSelect>
+            <NativeSelectOption value="one">Option one</NativeSelectOption>
+            <NativeSelectOption value="two">Option two</NativeSelectOption>
+          </NativeSelect>
+
+          <Menubar>
+            <MenubarMenu>
+              <MenubarTrigger>File</MenubarTrigger>
+              <MenubarContent>
+                <MenubarItem>New</MenubarItem>
+                <MenubarItem>Open</MenubarItem>
+              </MenubarContent>
+            </MenubarMenu>
+          </Menubar>
+        </div>
+
+        <ResizablePanelGroup orientation="horizontal" className="h-24 w-48 rounded-lg border">
+          <ResizablePanel className="flex items-center justify-center text-sm">Left</ResizablePanel>
+          <ResizableHandle withHandle />
+          <ResizablePanel className="flex items-center justify-center text-sm">Right</ResizablePanel>
+        </ResizablePanelGroup>
       </div>
     </main>
   )
