@@ -77,8 +77,8 @@ Publishing happens automatically via [`.github/workflows/publish.yml`](.github/w
 1. ~~Install shadcn/ui in this repo~~ ✅ Done — Vite + React + Base UI, component source lands in `src/components/ui/` via `npx shadcn add <component>`.
 2. ~~Wire Figma tokens into shadcn's CSS variables~~ ✅ Done — `src/index.css` imports `tokens/generated/variables.css`, light + dark both resolved from Figma.
 3. **Customize each component to match Figma** — 🟡 in progress, see [`SKILL.md`](SKILL.md)'s component inventory for what's done (just Button so far). Default policy (see `TOKEN_RULEBOOK.md`): keep shadcn's geometry, only confirm color/font already resolve through Tabygen's tokens.
-4. ~~Set up `registry.json`~~ ✅ Done — [`registry.json`](registry.json) + `npm run registry:build` → [`public/r/`](public/r/), served via raw GitHub URLs for now (no separate hosting yet).
+4. ~~Set up `registry.json`~~ ✅ Done, mechanically — [`registry.json`](registry.json) + `npm run registry:build` → [`public/r/`](public/r/). **Not yet reachable by another project**: this repo is private, so raw GitHub URLs 404 for unauthenticated pulls. Still needs a decision — public repo, authenticated registry entry, or hosting `public/r/` publicly (e.g. GitHub Pages) while staying private. See [`SKILL.md`](SKILL.md).
 5. ~~Write `SKILL.md`~~ ✅ Done — [`SKILL.md`](SKILL.md).
-6. **Test-pull into a second project** — confirms the full loop (tokens → components → registry → consuming app) actually works end to end. Both consuming projects will be initialized with Base UI to match this registry.
+6. **Test-pull into a second project** — blocked on #4's access decision above. Both consuming projects will be initialized with Base UI to match this registry.
 
 Component work now follows `/design-component` (in `~/.agents/skills/design-component/`) rather than the ad-hoc steps above.
