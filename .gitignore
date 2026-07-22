@@ -1,4 +1,6 @@
 node_modules/
-storybook-static/
+dist/
+dist-ssr/
+*.local
 .env
 .DS_Store

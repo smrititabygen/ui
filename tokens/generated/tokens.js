@@ -80,14 +80,46 @@ export const colors = {
 }
 
 export const semantic = {
-  "primary": "#494fe8",
-  "primaryHover": "#3a3fba",
-  "secondary": "#045fcb",
-  "secondaryHover": "#034ca3",
-  "success": "#5fbb4c",
-  "error": "#a11b1b",
-  "warning": "#ffb341",
-  "textDefault": "#121417",
-  "textMuted": "#586574",
-  "borderDefault": "#bcc1c7"
+  "light": {
+    "background": "#ffffff",
+    "foreground": "#121417",
+    "card": "#ffffff",
+    "card-foreground": "#121417",
+    "popover": "#ffffff",
+    "popover-foreground": "#121417",
+    "primary": "#494fe8",
+    "primary-foreground": "#ffffff",
+    "secondary": "#dee0e3",
+    "secondary-foreground": "#121417",
+    "muted": "#dee0e3",
+    "muted-foreground": "#353d46",
+    "accent": "#dbdcfa",
+    "accent-foreground": "#494fe8",
+    "destructive": "#a11b1b",
+    "destructive-foreground": "#ffffff",
+    "border": "#9ba3ac",
+    "input": "#9ba3ac",
+    "ring": "#494fe8"
+  },
+  "dark": {
+    "background": "#000000",
+    "foreground": "#dee0e3",
+    "card": "#000000",
+    "card-foreground": "#dee0e3",
+    "popover": "#000000",
+    "popover-foreground": "#dee0e3",
+    "primary": "#3a3fba",
+    "primary-foreground": "#000000",
+    "secondary": "#121417",
+    "secondary-foreground": "#dee0e3",
+    "muted": "#121417",
+    "muted-foreground": "#9ba3ac",
+    "accent": "#0f102e",
+    "accent-foreground": "#3a3fba",
+    "destructive": "#811616",
+    "destructive-foreground": "#000000",
+    "border": "#23282e",
+    "input": "#23282e",
+    "ring": "#3a3fba"
+  }
 }

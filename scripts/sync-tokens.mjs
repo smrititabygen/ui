@@ -1,13 +1,21 @@
 /**
- * Syncs design tokens from the Figma design system file into tokens/figma-tokens.json,
- * then generates all token outputs directly from that JSON.
+ * Builds design token outputs from tokens/figma-export.json, a raw variables export
+ * from the "Tokens Studio for Figma" plugin (Figma's own Variables REST API requires
+ * an Enterprise plan, which this team doesn't have — so tokens are pulled manually via
+ * the plugin instead of an automated API fetch).
  *
  * Usage:
- *   npm run sync                  # pull from Figma + rebuild
- *   npm run build:tokens          # rebuild from existing figma-tokens.json only
+ *   1. In Figma, open the Tokens Studio plugin, pull in the local Figma Variables,
+ *      and export/download as JSON.
+ *   2. Replace tokens/figma-export.json with the new export.
+ *   3. Run: npm run sync
  *
- * Requires:
- *   FIGMA_ACCESS_TOKEN env var — generate at figma.com → Account Settings → Personal access tokens
+ * tokens/figma-export.json has 4 variable collections, each an alias layer on the next:
+ *   - Brand  (mode "Value"): raw hex palette — the only collection with literal values.
+ *   - Alias  (mode "Mode 1"): references into Brand (e.g. Primary.default -> {Violet.500}).
+ *   - Mapped (modes "Light"/"Dark"): semantic roles (Surface/Text/Icon/Border) referencing
+ *     Alias (or occasionally Brand directly) — this is where light vs. dark actually differs.
+ *   - Responsive (modes "Desktop"/"Mobile"): typography scale — not consumed yet.
  */
 
 import { readFileSync, writeFileSync } from 'fs'
@@ -16,116 +24,136 @@ import { fileURLToPath } from 'url'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
 const ROOT = resolve(__dirname, '..')
+const EXPORT_PATH = resolve(ROOT, 'tokens/figma-export.json')
 const TOKENS_PATH = resolve(ROOT, 'tokens/figma-tokens.json')
 const OUT = resolve(ROOT, 'tokens/generated')
-const FIGMA_FILE_KEY = 'G5CXMiT17Rt3Z6U1StnLrd'
 
-const skipFigma = process.argv.includes('--skip-figma')
+const skipImport = process.argv.includes('--skip-figma')
 
-// ─── Color utilities ──────────────────────────────────────────────────────────
+// ─── figma-export.json → resolved values ──────────────────────────────────────
 
-function rgbaToHex(r, g, b, a = 1) {
-  const ch = (n) => Math.round(n * 255).toString(16).padStart(2, '0')
-  const hex = `#${ch(r)}${ch(g)}${ch(b)}`
-  return a < 1 ? `${hex}${ch(a)}` : hex
-}
-
-function hexToHsl(hex) {
-  const r = parseInt(hex.slice(1, 3), 16) / 255
-  const g = parseInt(hex.slice(3, 5), 16) / 255
-  const b = parseInt(hex.slice(5, 7), 16) / 255
-  const max = Math.max(r, g, b)
-  const min = Math.min(r, g, b)
-  let h = 0, s = 0
-  const l = (max + min) / 2
-  if (max !== min) {
-    const d = max - min
-    s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-    switch (max) {
-      case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break
-      case g: h = ((b - r) / d + 2) / 6; break
-      case b: h = ((r - g) / d + 4) / 6; break
+// Flattens a nested token tree into { "Surface.page.default": {$value, $type, $collectionName} }
+function flattenTokens(node, prefix = []) {
+  const out = {}
+  for (const [key, val] of Object.entries(node)) {
+    if (val && typeof val === 'object' && '$value' in val) {
+      out[[...prefix, key].join('.')] = val
+    } else if (val && typeof val === 'object') {
+      Object.assign(out, flattenTokens(val, [...prefix, key]))
     }
   }
-  return `${Math.round(h * 360)} ${Math.round(s * 100)}% ${Math.round(l * 100)}%`
+  return out
 }
 
-// ─── Figma → figma-tokens.json ────────────────────────────────────────────────
-
-function setNested(obj, path, value) {
-  const parts = path.map((p) => p.toLowerCase().replace(/\s+/g, '-'))
-  let cursor = obj
-  for (let i = 0; i < parts.length - 1; i++) {
-    cursor[parts[i]] = cursor[parts[i]] ?? {}
-    cursor = cursor[parts[i]]
-  }
-  cursor[parts[parts.length - 1]] = value
+function resolveValue(value, ownCollectionName, resolvedByCollection) {
+  if (typeof value !== 'string') return value
+  const m = /^\{(.+)\}$/.exec(value)
+  if (!m) return value
+  const refPath = m[1]
+  const table = resolvedByCollection[ownCollectionName]
+  if (!table) throw new Error(`Cannot resolve "{${refPath}}" — unknown collection "${ownCollectionName}"`)
+  const resolved = table[refPath]
+  if (resolved === undefined) throw new Error(`Cannot resolve "{${refPath}}" in collection "${ownCollectionName}"`)
+  return resolved.value
 }
 
-async function fetchFigmaVariables(token) {
-  const url = `https://api.figma.com/v1/files/${FIGMA_FILE_KEY}/variables/local`
-  const res = await fetch(url, { headers: { 'X-Figma-Token': token } })
-
-  if (res.status === 403) throw new Error('Invalid FIGMA_ACCESS_TOKEN — check it at figma.com → Account Settings → Personal access tokens')
-  if (res.status === 404) throw new Error(`Figma file not found: ${FIGMA_FILE_KEY}`)
-  if (!res.ok) throw new Error(`Figma API error ${res.status}: ${await res.text()}`)
-
-  return res.json()
-}
-
-async function pullFromFigma() {
-  const token = process.env.FIGMA_ACCESS_TOKEN
-  if (!token) {
-    throw new Error(
-      'FIGMA_ACCESS_TOKEN is not set.\n' +
-      'Generate one at figma.com → Account Settings → Personal access tokens\n' +
-      'Then: export FIGMA_ACCESS_TOKEN=your_token'
-    )
-  }
-
-  console.log('Fetching variables from Figma...')
-  const data = await fetchFigmaVariables(token)
-
-  const { variables, variableCollections } = data.meta
-  const tokens = {}
-  let count = 0
-
-  for (const collection of Object.values(variableCollections)) {
-    const defaultModeId = collection.defaultModeId
-    for (const variableId of collection.variableIds) {
-      const variable = variables[variableId]
-      if (!variable) continue
-      const modeValue = variable.resolvedValuesByMode?.[defaultModeId]
-      if (!modeValue?.resolvedValue) continue
-      const parts = variable.name.split('/')
-      const rv = modeValue.resolvedValue
-      let entry
-      if (variable.resolvedType === 'COLOR') {
-        entry = { $value: rgbaToHex(rv.r, rv.g, rv.b, rv.a), $type: 'color' }
-      } else if (variable.resolvedType === 'FLOAT') {
-        entry = { $value: rv, $type: 'number' }
-      } else if (variable.resolvedType === 'STRING') {
-        entry = { $value: rv, $type: 'string' }
-      } else {
-        continue
-      }
-      setNested(tokens, parts, entry)
-      count++
+// Resolves one collection's mode trees into flat { "path.to.token": { value, type } }, keyed by mode name.
+function resolveCollection(collectionName, modes, resolvedByCollection) {
+  const byMode = {}
+  for (const [modeName, tree] of Object.entries(modes)) {
+    const flat = flattenTokens(tree)
+    const resolved = {}
+    for (const [path, token] of Object.entries(flat)) {
+      const refCollection = token.$collectionName || collectionName
+      const value = resolveValue(token.$value, refCollection, resolvedByCollection)
+      resolved[path] = { value, type: token.$type }
     }
+    byMode[modeName] = resolved
+  }
+  return byMode
+}
+
+function loadFigmaExport() {
+  const raw = JSON.parse(readFileSync(EXPORT_PATH, 'utf-8'))
+  const collections = {}
+  for (const entry of raw) {
+    const [name] = Object.keys(entry)
+    collections[name] = entry[name].modes
   }
 
-  if (count === 0) {
-    console.warn(
-      'Warning: No Figma variables found in this file.\n' +
-      'Make sure you have defined variables in Figma (not just color styles).\n' +
-      'Keeping existing tokens/figma-tokens.json unchanged.'
-    )
-    return false
+  const resolvedByCollection = {}
+  // Brand has no refs — resolve first so Alias/Mapped can look it up.
+  resolvedByCollection.Brand = resolveCollection('Brand', collections.Brand, resolvedByCollection)['Value']
+  // Alias refs into Brand.
+  resolvedByCollection.Alias = resolveCollection('Alias', collections.Alias, resolvedByCollection)['Mode 1']
+  // Mapped refs into Alias (mostly) or Brand directly — has Light/Dark modes.
+  const mapped = resolveCollection('Mapped', collections.Mapped, resolvedByCollection)
+
+  return { brand: resolvedByCollection.Brand, mapped }
+}
+
+const COLOR_GROUPS = ['grey', 'slate', 'blue', 'red', 'yellow', 'green', 'violet']
+
+function buildColorPalette(brand) {
+  const colors = {}
+  for (const [path, token] of Object.entries(brand)) {
+    if (token.type !== 'color') continue
+    const [group, shade] = path.split('.')
+    const groupSlug = group.toLowerCase()
+    if (!COLOR_GROUPS.includes(groupSlug)) continue
+    colors[groupSlug] = colors[groupSlug] ?? {}
+    colors[groupSlug][shade] = { $value: token.value, $type: 'color' }
+  }
+  return colors
+}
+
+// Maps Figma's "Mapped" semantic roles onto shadcn's Tailwind v4 CSS variable names.
+function buildSemantic(mappedMode) {
+  const get = (path) => mappedMode[path]?.value ?? '#000000'
+  const entries = {
+    background:             get('Surface.page.default'),
+    foreground:              get('Text.default.Body'),
+    card:                    get('Surface.page.base'),
+    'card-foreground':       get('Text.default.Body'),
+    popover:                 get('Surface.page.default'),
+    'popover-foreground':    get('Text.default.Body'),
+    primary:                 get('Surface.action.default'),
+    'primary-foreground':    get('Text.action.on-color'),
+    secondary:               get('Surface.page.secondary'),
+    'secondary-foreground':  get('Text.default.Body'),
+    muted:                   get('Surface.page.secondary'),
+    'muted-foreground':      get('Text.default.placeholder'),
+    accent:                  get('Surface.action.default-subtle'),
+    'accent-foreground':     get('Text.action.default'),
+    destructive:             get('Surface.error.default'),
+    'destructive-foreground':get('Text.error.on-color'),
+    border:                  get('Border.neutral.default'),
+    input:                   get('Border.neutral.default'),
+    ring:                    get('Surface.action.default'),
+  }
+  const result = {}
+  for (const [key, value] of Object.entries(entries)) {
+    result[key] = { $value: value, $type: 'color' }
+  }
+  return result
+}
+
+function importFigmaExport() {
+  console.log('Reading tokens/figma-export.json...')
+  const { brand, mapped } = loadFigmaExport()
+
+  const tokens = {
+    color: buildColorPalette(brand),
+    semantic: {},
+  }
+
+  for (const [modeName, mappedMode] of Object.entries(mapped)) {
+    tokens.semantic[modeName.toLowerCase()] = buildSemantic(mappedMode)
   }
 
   writeFileSync(TOKENS_PATH, JSON.stringify(tokens, null, 2) + '\n')
-  console.log(`✓ Wrote ${count} tokens to tokens/figma-tokens.json`)
-  return true
+  const modeNames = Object.keys(mapped)
+  console.log(`✓ Wrote tokens/figma-tokens.json — colors: ${Object.keys(tokens.color).length} groups, semantic modes: ${modeNames.join(', ')}`)
 }
 
 // ─── figma-tokens.json → generated files ─────────────────────────────────────
@@ -142,7 +170,18 @@ function readColors() {
   return colors
 }
 
-function buildCss(colors) {
+function readSemantic(modeName) {
+  const tokens = JSON.parse(readFileSync(TOKENS_PATH, 'utf-8'))
+  const source = tokens.semantic?.[modeName]
+  if (!source) return null
+  const semantic = {}
+  for (const [key, token] of Object.entries(source)) {
+    semantic[key] = token.$value
+  }
+  return semantic
+}
+
+function buildCss(colors, lightSemantic, darkSemantic) {
   const labels = {
     grey:   'Grey',
     slate:  'Slate',
@@ -163,45 +202,27 @@ function buildCss(colors) {
   }
   css = css.trimEnd() + '\n}\n'
 
-  const p = (group, shade) => colors[group]?.[shade] ?? '#000000'
-  const primary     = p('violet', '500')
-  const fg          = p('slate',  '900')
-  const secondaryBg = p('slate',  '100')
-  const mutedFg     = p('slate',  '500')
-  const accentBg    = p('violet', '100')
-  const accentFg    = p('violet', '700')
-  const destructive = p('red',    '500')
-  const border      = p('slate',  '200')
+  const emitSemanticBlock = (selector, semantic) => {
+    let block = `\n${selector} {\n`
+    for (const [key, value] of Object.entries(semantic)) {
+      block += `  --${key}: ${value};\n`
+    }
+    block += `  --radius: 0.5rem;\n}\n`
+    return block
+  }
 
   css += `
 /*
- * Shadcn/ui compatibility — raw HSL channel values, auto-computed from brand tokens.
- * Shadcn's Tailwind config wraps these in hsl(), e.g. hsl(var(--primary)).
- * Do not edit manually — regenerated by npm run sync.
- */
-:root {
-  --background:             0 0% 100%;
-  --foreground:             ${hexToHsl(fg)};
-  --card:                   0 0% 100%;
-  --card-foreground:        ${hexToHsl(fg)};
-  --popover:                0 0% 100%;
-  --popover-foreground:     ${hexToHsl(fg)};
-  --primary:                ${hexToHsl(primary)};
-  --primary-foreground:     0 0% 100%;
-  --secondary:              ${hexToHsl(secondaryBg)};
-  --secondary-foreground:   ${hexToHsl(fg)};
-  --muted:                  ${hexToHsl(secondaryBg)};
-  --muted-foreground:       ${hexToHsl(mutedFg)};
-  --accent:                 ${hexToHsl(accentBg)};
-  --accent-foreground:      ${hexToHsl(accentFg)};
-  --destructive:            ${hexToHsl(destructive)};
-  --destructive-foreground: 0 0% 100%;
-  --border:                 ${hexToHsl(border)};
-  --input:                  ${hexToHsl(border)};
-  --ring:                   ${hexToHsl(primary)};
-  --radius:                 0.5rem;
-}
-`
+ * Shadcn/ui compatibility — full color values resolved from Figma's Light/Dark
+ * semantic mapping (Mapped collection). Matches shadcn's Tailwind v4 convention
+ * (values used directly, e.g. var(--primary)). Do not edit manually — regenerated
+ * by npm run sync.
+ */`
+  css += emitSemanticBlock(':root', lightSemantic)
+  if (darkSemantic) {
+    css += emitSemanticBlock('.dark', darkSemantic)
+  }
+
   return css
 }
 
@@ -219,18 +240,18 @@ function buildTailwindPreset(colors) {
       extend: {
         colors: {
           ...palette,
-          background:  'hsl(var(--background))',
-          foreground:  'hsl(var(--foreground))',
-          card:        { DEFAULT: 'hsl(var(--card))',        foreground: 'hsl(var(--card-foreground))' },
-          popover:     { DEFAULT: 'hsl(var(--popover))',     foreground: 'hsl(var(--popover-foreground))' },
-          primary:     { DEFAULT: 'hsl(var(--primary))',     foreground: 'hsl(var(--primary-foreground))' },
-          secondary:   { DEFAULT: 'hsl(var(--secondary))',   foreground: 'hsl(var(--secondary-foreground))' },
-          muted:       { DEFAULT: 'hsl(var(--muted))',       foreground: 'hsl(var(--muted-foreground))' },
-          accent:      { DEFAULT: 'hsl(var(--accent))',      foreground: 'hsl(var(--accent-foreground))' },
-          destructive: { DEFAULT: 'hsl(var(--destructive))', foreground: 'hsl(var(--destructive-foreground))' },
-          border: 'hsl(var(--border))',
-          input:  'hsl(var(--input))',
-          ring:   'hsl(var(--ring))',
+          background:  'var(--background)',
+          foreground:  'var(--foreground)',
+          card:        { DEFAULT: 'var(--card)',        foreground: 'var(--card-foreground)' },
+          popover:     { DEFAULT: 'var(--popover)',     foreground: 'var(--popover-foreground)' },
+          primary:     { DEFAULT: 'var(--primary)',     foreground: 'var(--primary-foreground)' },
+          secondary:   { DEFAULT: 'var(--secondary)',   foreground: 'var(--secondary-foreground)' },
+          muted:       { DEFAULT: 'var(--muted)',       foreground: 'var(--muted-foreground)' },
+          accent:      { DEFAULT: 'var(--accent)',      foreground: 'var(--accent-foreground)' },
+          destructive: { DEFAULT: 'var(--destructive)', foreground: 'var(--destructive-foreground)' },
+          border: 'var(--border)',
+          input:  'var(--input)',
+          ring:   'var(--ring)',
         },
         borderRadius: {
           DEFAULT: 'var(--radius)',
@@ -247,43 +268,38 @@ function buildTailwindPreset(colors) {
   return `/** Auto-generated — run npm run sync to update */\nexport default ${JSON.stringify(preset, null, 2)}\n`
 }
 
-function buildJsTokens(colors) {
-  const p = (group, shade) => colors[group]?.[shade] ?? '#000000'
-  const semantic = {
-    primary:        p('violet', '500'),
-    primaryHover:   p('violet', '600'),
-    secondary:      p('blue',   '500'),
-    secondaryHover: p('blue',   '600'),
-    success:        p('green',  '500'),
-    error:          p('red',    '500'),
-    warning:        p('yellow', '500'),
-    textDefault:    p('slate',  '900'),
-    textMuted:      p('slate',  '500'),
-    borderDefault:  p('slate',  '200'),
-  }
-
+// semantic here is exactly the same resolved { light, dark } data buildCss() uses for
+// variables.css — no separate derivation, so this can never drift out of sync with the CSS.
+function buildJsTokens(colors, lightSemantic, darkSemantic) {
   return (
     `/** Auto-generated — run npm run sync to update */\n` +
     `export const colors = ${JSON.stringify(colors, null, 2)}\n\n` +
-    `export const semantic = ${JSON.stringify(semantic, null, 2)}\n`
+    `export const semantic = ${JSON.stringify({ light: lightSemantic, dark: darkSemantic }, null, 2)}\n`
   )
 }
 
 function buildTokens() {
   const colors = readColors()
-  writeFileSync(`${OUT}/variables.css`,      buildCss(colors))
+  const lightSemantic = readSemantic('light')
+  const darkSemantic = readSemantic('dark')
+
+  if (!lightSemantic) {
+    throw new Error('tokens/figma-tokens.json has no "light" semantic mode — run npm run sync (without --skip-figma) first.')
+  }
+
+  writeFileSync(`${OUT}/variables.css`,      buildCss(colors, lightSemantic, darkSemantic))
   writeFileSync(`${OUT}/tailwind-preset.js`, buildTailwindPreset(colors))
-  writeFileSync(`${OUT}/tokens.js`,          buildJsTokens(colors))
+  writeFileSync(`${OUT}/tokens.js`,          buildJsTokens(colors, lightSemantic, darkSemantic))
   console.log('✓ Generated tokens/generated/ (variables.css, tailwind-preset.js, tokens.js)')
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
-async function main() {
-  if (!skipFigma) {
-    await pullFromFigma()
+function main() {
+  if (!skipImport) {
+    importFigmaExport()
   } else {
-    console.log('Skipping Figma fetch (--skip-figma), rebuilding from existing tokens...')
+    console.log('Skipping figma-export.json import (--skip-figma), rebuilding from existing tokens...')
   }
   buildTokens()
   console.log('\nDone. Next steps:')
@@ -291,7 +307,9 @@ async function main() {
   console.log('  npm version patch        — bump version before publishing')
 }
 
-main().catch((err) => {
+try {
+  main()
+} catch (err) {
   console.error('\nError:', err.message)
   process.exit(1)
-})
+}
