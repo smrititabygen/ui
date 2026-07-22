@@ -224,6 +224,138 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "accordion",
+      "type": "registry:ui",
+      "title": "Accordion",
+      "description": "Tabygen accordion — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/accordion.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "Tabygen alert dialog — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react). Uses the Tabygen Button internally for its action/cancel buttons.",
+      "dependencies": ["@base-ui/react"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/components/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Tabygen popover — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Tabygen dropdown menu — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "progress",
+      "type": "registry:ui",
+      "title": "Progress",
+      "description": "Tabygen progress — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/progress.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "Tabygen slider — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react). Thumb fill fixed from shadcn's hardcoded bg-white to bg-background so it adapts in dark mode — see TOKEN_RULEBOOK.md Section 5.",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "Tabygen toggle — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "files": [
+        {
+          "path": "src/components/ui/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle-group",
+      "type": "registry:ui",
+      "title": "Toggle Group",
+      "description": "Tabygen toggle group — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react). Reuses toggleVariants from the toggle component.",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "registryDependencies": ["toggle"],
+      "files": [
+        {
+          "path": "src/components/ui/toggle-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "title": "Sonner (Toaster)",
+      "description": "Tabygen toast notifications — shadcn geometry, Tabygen brand colors via CSS variables passed to the sonner library's theme API. Requires rendering <Toaster /> once at the app root (see SKILL.md).",
+      "dependencies": ["sonner", "next-themes", "lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/sonner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "Tabygen table — shadcn geometry, Tabygen brand colors and font. Plain HTML elements, no external primitive.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

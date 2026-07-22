@@ -108,8 +108,15 @@ function buildColorPalette(brand) {
 }
 
 // Maps Figma's "Mapped" semantic roles onto shadcn's Tailwind v4 CSS variable names.
-function buildSemantic(mappedMode) {
+function buildSemantic(mappedMode, modeName) {
   const get = (path) => mappedMode[path]?.value ?? '#000000'
+  // Light mode: Border.neutral.default resolves to Neutral.300 (#9ba3ac), a solid
+  // mid-grey that reads as heavy rather than subtle. Overridden to Neutral.100 (the
+  // same tier Surface.page.secondary already uses) per explicit design decision —
+  // see TOKEN_RULEBOOK.md Section 5. Dark mode's Border.neutral.default (Neutral.800)
+  // is left untouched; it's already one step off the near-black background, which is
+  // the standard subtle-border pattern for dark UIs.
+  const border = modeName === 'Light' ? get('Surface.page.secondary') : get('Border.neutral.default')
   const entries = {
     background:             get('Surface.page.default'),
     foreground:              get('Text.default.Body'),
@@ -127,8 +134,8 @@ function buildSemantic(mappedMode) {
     'accent-foreground':     get('Text.action.default'),
     destructive:             get('Surface.error.default'),
     'destructive-foreground':get('Text.error.on-color'),
-    border:                  get('Border.neutral.default'),
-    input:                   get('Border.neutral.default'),
+    border,
+    input: border,
     ring:                    get('Surface.action.default'),
   }
   const result = {}
@@ -148,7 +155,7 @@ function importFigmaExport() {
   }
 
   for (const [modeName, mappedMode] of Object.entries(mapped)) {
-    tokens.semantic[modeName.toLowerCase()] = buildSemantic(mappedMode)
+    tokens.semantic[modeName.toLowerCase()] = buildSemantic(mappedMode, modeName)
   }
 
   writeFileSync(TOKENS_PATH, JSON.stringify(tokens, null, 2) + '\n')

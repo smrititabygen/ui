@@ -26,6 +26,25 @@ components must reference the corresponding CSS variable, never a hardcoded valu
 *value* changed upstream (via a Figma re-sync), never because someone edited a
 component file directly with a new color.
 
+**Known deliberate remap — light-mode `--border`/`--input`:** Figma's own
+`Border.neutral.default` token resolves to `Neutral.300` (`#9ba3ac`), a solid
+mid-grey — too heavy for the "clean, minimal, subtle like shadcn" look the design
+system is meant to have. Per explicit user decision, `scripts/sync-tokens.mjs`'s
+`buildSemantic()` overrides this **in light mode only** to reuse `Neutral.100`
+(`#dee0e3`, the same tier `Surface.page.secondary`/`muted` already uses) instead of
+following `Border.neutral.default` directly. Dark mode is untouched (still follows
+`Border.neutral.default` → `Neutral.800`). This value is still a real, existing Figma
+token (Neutral.100) — not invented — just not the one the `Border.neutral.default`
+path itself points to. See Section 5 for the full decision record.
+
+**Known gap — muted/secondary backgrounds (`--muted`, `--secondary`):** these use
+`Neutral.100` (`#dee0e3`), which is already the *lightest* tier Figma's Slate scale
+defines (100–900, no lighter step exists). It reads slightly more saturated than
+shadcn's own typical near-white muted background. Per explicit user decision, this is
+being left as-is rather than synthesizing an unofficial lighter value — flag to the
+Figma design system owner if an even lighter neutral tier is wanted later; do not
+invent one locally without a new decision recorded here.
+
 **Membership test for this section:** a property only belongs here if it is actually
 present in `tokens/figma-tokens.json` and/or `tokens/generated/variables.css` —
 i.e. `scripts/sync-tokens.mjs` reads and emits it. If a value merely *matches* what
@@ -134,6 +153,16 @@ independently reinventing padding/radius/gap choices.
 | Dialog, Select, Tabs, Avatar, Alert, Tooltip, Radio Group, Skeleton | Color | No changes needed for any of the 8 — all reference semantic CSS variables (`bg-popover`, `bg-accent`, `bg-muted`, `bg-primary`, `bg-foreground`/`text-background` for Tooltip's inverted popup, `bg-card` for Alert, etc.), Figma-sourced via the token pipeline. | batch-3 milestone |
 | Dialog, Select, Tabs, Avatar, Alert, Tooltip, Radio Group, Skeleton | Font | No changes needed for any of the 8 — inherit `font-sans`/`font-heading` (both resolve to Inter) from the base layer; no per-component override exists. | batch-3 milestone |
 | Dialog | Structure (not geometry/color/font) | Dialog imports Tabygen's own `Button` component internally for its close/footer actions. Registered with `registryDependencies: ["button"]` in `registry.json` so pulling Dialog auto-installs Button too — this is a registry wiring decision, not a token decision, but recorded here since it affects how the component is consumed. | batch-3 milestone |
+| Accordion, Alert Dialog, Popover, Dropdown Menu, Progress, Slider, Toggle, Toggle Group, Sonner, Table | Geometry | Kept exactly as shadcn's default for all 10 — no Figma geometry spec exists for any of them. Fourth application of the default policy above. | batch-4 milestone |
+| Accordion, Alert Dialog, Popover, Dropdown Menu, Progress, Toggle, Toggle Group, Sonner, Table | Color | No changes needed for 9 of the 10 — all reference semantic CSS variables, Figma-sourced via the token pipeline. | batch-4 milestone |
+| **Slider** | Color — **exception, edit made** | shadcn's shipped source hardcoded the thumb as `bg-white`, not a semantic CSS variable — this fails the membership test in Section 1 (not Figma-sourced) and violates process rule 1 (never hardcode a color). Fixed by changing `bg-white` → `bg-background` in `src/components/ui/slider.tsx`, matching how Switch's thumb is already styled elsewhere in this repo. This is the first actual code edit made to a pulled shadcn component (every prior component needed zero edits) — recorded here per process rule 2/5. | batch-4 milestone |
+| Alert Dialog | Structure (not geometry/color/font) | Same pattern as Dialog: imports Tabygen's own `Button` internally, registered with `registryDependencies: ["button"]`. | batch-4 milestone |
+| Toggle Group | Structure (not geometry/color/font) | Imports `toggleVariants` from the Toggle component file directly (not just a registry link) — registered with `registryDependencies: ["toggle"]` so the source file is guaranteed present, not just the variants export. | batch-4 milestone |
+| Dialog, Alert Dialog, Accordion | Font (`font-heading` on Title components) | No changes needed — same `--font-heading: var(--font-sans)` alias already verified for Card in batch 2. | batch-4 milestone |
+| Input, Label, Textarea, Card, Badge, Separator, Checkbox, Switch, Dialog, Select, Tabs, Avatar, Alert, Tooltip, Radio Group, Skeleton, Accordion, Popover, Dropdown Menu, Progress, Toggle, Toggle Group, Table | Font | No changes needed — all inherit `font-sans` (Inter) from the base layer. | batch-4 milestone |
+| Sonner | Font/Color (special case) | Doesn't use Tailwind utility classes at all — passes Figma-sourced CSS variables directly into the `sonner` library's `style` prop (`--normal-bg: var(--popover)`, `--normal-text: var(--popover-foreground)`, `--normal-border: var(--border)`, `--border-radius: var(--radius)`). Confirmed this is still "Figma-sourced," just via a different mechanism than every other component — flagged since it doesn't fit the usual "check for hardcoded Tailwind classes" pattern. | batch-4 milestone |
+| *(all components, retroactive)* | Color — `--border`/`--input` (light mode only) | User feedback after reviewing batches 1–4: greys (borders, dividers) looked too heavy, not "clean and subtle like shadcn." Traced to `Border.neutral.default` resolving to Neutral.300 (`#9ba3ac`). Remapped in `scripts/sync-tokens.mjs` to Neutral.100 (`#dee0e3`) for light mode only — see Section 1 note above. This is a token-pipeline fix, applies automatically to every component (past and future) that references `--border`/`--input`; no component files were touched. Dark mode intentionally left alone. | greys-subtlety milestone |
+| *(all components)* | Color — `--muted`/`--secondary` background | Same review: flagged as still slightly more saturated than shadcn's own convention, but confirmed this is genuinely the lightest tier Figma's Slate scale defines (no lighter step exists). Decision: keep `#dee0e3` as-is rather than inventing an unofficial lighter value — see Section 1 gap note above. | greys-subtlety milestone |
 
 **Rule:** before setting a geometry value on any new component, check this table
 first for a related decision already made on a prior component (e.g. Input's radius

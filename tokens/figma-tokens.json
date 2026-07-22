@@ -334,11 +334,11 @@
         "$type": "color"
       },
       "border": {
-        "$value": "#9ba3ac",
+        "$value": "#dee0e3",
         "$type": "color"
       },
       "input": {
-        "$value": "#9ba3ac",
+        "$value": "#dee0e3",
         "$type": "color"
       },
       "ring": {

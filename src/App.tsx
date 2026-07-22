@@ -15,8 +15,19 @@ import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
 import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Skeleton } from "@/components/ui/skeleton"
+import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/components/ui/accordion"
+import { AlertDialog, AlertDialogTrigger, AlertDialogContent, AlertDialogHeader, AlertDialogTitle, AlertDialogDescription, AlertDialogFooter, AlertDialogAction, AlertDialogCancel } from "@/components/ui/alert-dialog"
+import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover"
+import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator } from "@/components/ui/dropdown-menu"
+import { Progress } from "@/components/ui/progress"
+import { Slider } from "@/components/ui/slider"
+import { Toggle } from "@/components/ui/toggle"
+import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
+import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table"
 import type { VariantProps } from "class-variance-authority"
-import { ArrowRight, Download } from "lucide-react"
+import { ArrowRight, Download, Bold, Italic, Underline } from "lucide-react"
 
 // Dev smoke test, not a real component-showcase page — renders the full variant x size
 // matrix to confirm they're independent props (any variant combines with any size),
@@ -188,6 +199,91 @@ function App() {
           </div>
         </div>
       </TooltipProvider>
+
+      <Separator className="my-8" />
+
+      <h2 className="text-lg font-semibold">Batch 4 — menus, controls, data</h2>
+      <div className="mt-4 flex flex-wrap items-start gap-6">
+        <div className="flex flex-col gap-4">
+          <AlertDialog>
+            <AlertDialogTrigger render={<Button variant="destructive">Delete item</Button>} />
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                <AlertDialogDescription>This action cannot be undone.</AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel>Cancel</AlertDialogCancel>
+                <AlertDialogAction variant="destructive">Delete</AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+
+          <Popover>
+            <PopoverTrigger render={<Button variant="outline">Open popover</Button>} />
+            <PopoverContent>Popover content goes here.</PopoverContent>
+          </Popover>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger render={<Button variant="outline">Open menu</Button>} />
+            <DropdownMenuContent>
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Button variant="outline" onClick={() => toast("Event created", { description: "Sunday, July 26th at 2pm" })}>
+            Show toast
+          </Button>
+        </div>
+
+        <div className="flex flex-col gap-4 w-64">
+          <Progress value={60} />
+          <Slider defaultValue={[40]} />
+          <div className="flex gap-2">
+            <Toggle aria-label="Bold"><Bold /></Toggle>
+            <Toggle aria-label="Italic"><Italic /></Toggle>
+          </div>
+          <ToggleGroup variant="outline">
+            <ToggleGroupItem value="bold" aria-label="Bold"><Bold /></ToggleGroupItem>
+            <ToggleGroupItem value="italic" aria-label="Italic"><Italic /></ToggleGroupItem>
+            <ToggleGroupItem value="underline" aria-label="Underline"><Underline /></ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+
+        <Accordion className="w-72">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Is it accessible?</AccordionTrigger>
+            <AccordionContent>Yes, built on Base UI primitives.</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>Is it styled?</AccordionTrigger>
+            <AccordionContent>Yes, with Tabygen brand tokens.</AccordionContent>
+          </AccordionItem>
+        </Accordion>
+
+        <Table className="w-80">
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Status</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>Ada Lovelace</TableCell>
+              <TableCell><Badge variant="secondary">Active</Badge></TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>Grace Hopper</TableCell>
+              <TableCell><Badge>Active</Badge></TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </div>
+      <Toaster />
     </main>
   )
 }

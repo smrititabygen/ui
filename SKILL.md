@@ -37,6 +37,16 @@ shadcn-default, per property).
 | [Tooltip](src/components/ui/tooltip.tsx) | Base UI (`@base-ui/react/tooltip`) | No edits needed — same as Button. **Integration note:** exports `TooltipProvider`, which must wrap the consuming app's root (or at least the tree using tooltips) — see the pulling section below | [`public/r/tooltip.json`](public/r/tooltip.json) |
 | [Radio Group](src/components/ui/radio-group.tsx) | Base UI (`@base-ui/react/radio-group`, `@base-ui/react/radio`) | No edits needed — same as Button | [`public/r/radio-group.json`](public/r/radio-group.json) |
 | [Skeleton](src/components/ui/skeleton.tsx) | Plain HTML element, no primitive | No edits needed — same as Button | [`public/r/skeleton.json`](public/r/skeleton.json) |
+| [Accordion](src/components/ui/accordion.tsx) | Base UI (`@base-ui/react/accordion`) | No edits needed — same as Button | [`public/r/accordion.json`](public/r/accordion.json) |
+| [Alert Dialog](src/components/ui/alert-dialog.tsx) | Base UI (`@base-ui/react/alert-dialog`) | No edits needed — same as Button. Pulls in `button` as a `registryDependency` automatically | [`public/r/alert-dialog.json`](public/r/alert-dialog.json) |
+| [Popover](src/components/ui/popover.tsx) | Base UI (`@base-ui/react/popover`) | No edits needed — same as Button | [`public/r/popover.json`](public/r/popover.json) |
+| [Dropdown Menu](src/components/ui/dropdown-menu.tsx) | Base UI (`@base-ui/react/menu`) | No edits needed — same as Button | [`public/r/dropdown-menu.json`](public/r/dropdown-menu.json) |
+| [Progress](src/components/ui/progress.tsx) | Base UI (`@base-ui/react/progress`) | No edits needed — same as Button | [`public/r/progress.json`](public/r/progress.json) |
+| [Slider](src/components/ui/slider.tsx) | Base UI (`@base-ui/react/slider`) | **One color fix:** thumb was hardcoded `bg-white` in shadcn's shipped source — changed to `bg-background` so it follows Tabygen's semantic tokens and adapts in dark mode. See `TOKEN_RULEBOOK.md` Section 5 | [`public/r/slider.json`](public/r/slider.json) |
+| [Toggle](src/components/ui/toggle.tsx) | Base UI (`@base-ui/react/toggle`) | No edits needed — same as Button | [`public/r/toggle.json`](public/r/toggle.json) |
+| [Toggle Group](src/components/ui/toggle-group.tsx) | Base UI (`@base-ui/react/toggle-group`) | No edits needed — same as Button. Pulls in `toggle` as a `registryDependency` automatically | [`public/r/toggle-group.json`](public/r/toggle-group.json) |
+| [Sonner (Toaster)](src/components/ui/sonner.tsx) | `sonner` + `next-themes` (not Base UI) | No edits needed — colors passed through as CSS variables (`--normal-bg: var(--popover)`, etc.), already Figma-sourced. **Integration note:** render `<Toaster />` once at the app root (see below) | [`public/r/sonner.json`](public/r/sonner.json) |
+| [Table](src/components/ui/table.tsx) | Plain HTML elements, no primitive | No edits needed — same as Button | [`public/r/table.json`](public/r/table.json) |
 
 This table is the source of truth for what exists. If a component isn't listed here,
 it isn't in the registry yet — build it via `/design-component` in this repo first.
@@ -74,6 +84,23 @@ function App() {
 }
 ```
 Without this, `Tooltip`/`TooltipTrigger`/`TooltipContent` will throw at runtime.
+
+**Sonner needs a mounted `<Toaster />`.** After pulling `sonner`, render it once near
+your app root:
+```tsx
+import { Toaster } from "@/components/ui/sonner"
+
+function App() {
+  return (
+    <>
+      {/* rest of your app */}
+      <Toaster />
+    </>
+  )
+}
+```
+Then trigger toasts from anywhere with `import { toast } from "sonner"` and
+`toast("message")`.
 
 ## How tokens map to what you write
 

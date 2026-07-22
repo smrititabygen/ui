@@ -97,8 +97,8 @@ export const semantic = {
     "accent-foreground": "#494fe8",
     "destructive": "#a11b1b",
     "destructive-foreground": "#ffffff",
-    "border": "#9ba3ac",
-    "input": "#9ba3ac",
+    "border": "#dee0e3",
+    "input": "#dee0e3",
     "ring": "#494fe8"
   },
   "dark": {
