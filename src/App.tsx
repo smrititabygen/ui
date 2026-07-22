@@ -26,8 +26,17 @@ import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group"
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from "@/components/ui/table"
+import { Command, CommandInput, CommandList, CommandEmpty, CommandGroup, CommandItem } from "@/components/ui/command"
+import { Combobox, ComboboxInput, ComboboxContent, ComboboxList, ComboboxItem, ComboboxEmpty } from "@/components/ui/combobox"
+import { Breadcrumb, BreadcrumbList, BreadcrumbItem, BreadcrumbLink, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb"
+import { NavigationMenu, NavigationMenuList, NavigationMenuItem, NavigationMenuTrigger, NavigationMenuContent, NavigationMenuLink } from "@/components/ui/navigation-menu"
+import { Calendar } from "@/components/ui/calendar"
+import { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
+import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationPrevious, PaginationNext } from "@/components/ui/pagination"
+import { Empty, EmptyHeader, EmptyMedia, EmptyTitle, EmptyDescription } from "@/components/ui/empty"
+import { Spinner } from "@/components/ui/spinner"
 import type { VariantProps } from "class-variance-authority"
-import { ArrowRight, Download, Bold, Italic, Underline } from "lucide-react"
+import { ArrowRight, Download, Bold, Italic, Underline, Inbox } from "lucide-react"
 
 // Dev smoke test, not a real component-showcase page — renders the full variant x size
 // matrix to confirm they're independent props (any variant combines with any size),
@@ -284,6 +293,90 @@ function App() {
         </Table>
       </div>
       <Toaster />
+
+      <Separator className="my-8" />
+
+      <h2 className="text-lg font-semibold">Batch 5 — navigation, dates, search, states</h2>
+      <div className="mt-4 flex flex-wrap items-start gap-6">
+        <div className="flex flex-col gap-4">
+          <Breadcrumb>
+            <BreadcrumbList>
+              <BreadcrumbItem><BreadcrumbLink href="#">Home</BreadcrumbLink></BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem><BreadcrumbLink href="#">Projects</BreadcrumbLink></BreadcrumbItem>
+              <BreadcrumbSeparator />
+              <BreadcrumbItem><BreadcrumbPage>Tabygen UI</BreadcrumbPage></BreadcrumbItem>
+            </BreadcrumbList>
+          </Breadcrumb>
+
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <NavigationMenuLink href="#">Design System</NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem><PaginationPrevious href="#" /></PaginationItem>
+              <PaginationItem><PaginationLink href="#" isActive>1</PaginationLink></PaginationItem>
+              <PaginationItem><PaginationLink href="#">2</PaginationLink></PaginationItem>
+              <PaginationItem><PaginationNext href="#" /></PaginationItem>
+            </PaginationContent>
+          </Pagination>
+
+          <div className="flex items-center gap-3">
+            <Spinner />
+            <Sheet>
+              <SheetTrigger render={<Button variant="outline">Open sheet</Button>} />
+              <SheetContent>
+                <SheetHeader>
+                  <SheetTitle>Sheet title</SheetTitle>
+                  <SheetDescription>Sheet description text.</SheetDescription>
+                </SheetHeader>
+              </SheetContent>
+            </Sheet>
+          </div>
+        </div>
+
+        <Calendar mode="single" className="rounded-xl border" />
+
+        <div className="flex flex-col gap-4 w-64">
+          <Command className="rounded-xl border">
+            <CommandInput placeholder="Search..." />
+            <CommandList>
+              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandGroup>
+                <CommandItem>Button</CommandItem>
+                <CommandItem>Calendar</CommandItem>
+                <CommandItem>Card</CommandItem>
+              </CommandGroup>
+            </CommandList>
+          </Command>
+
+          <Combobox items={["Ada Lovelace", "Grace Hopper", "Alan Turing"]}>
+            <ComboboxInput placeholder="Select a person" />
+            <ComboboxContent>
+              <ComboboxEmpty>No results found.</ComboboxEmpty>
+              <ComboboxList>
+                {(item: string) => <ComboboxItem key={item} value={item}>{item}</ComboboxItem>}
+              </ComboboxList>
+            </ComboboxContent>
+          </Combobox>
+        </div>
+
+        <Empty className="w-72">
+          <EmptyHeader>
+            <EmptyMedia variant="icon"><Inbox /></EmptyMedia>
+            <EmptyTitle>No messages</EmptyTitle>
+            <EmptyDescription>You're all caught up.</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      </div>
     </main>
   )
 }

@@ -356,6 +356,142 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "input-group",
+      "type": "registry:ui",
+      "title": "Input Group",
+      "description": "Tabygen input group — shadcn geometry, Tabygen brand colors and font. Pulled in automatically as a dependency of Command and Combobox, but also usable standalone. Uses the Tabygen Button, Input, and Textarea internally.",
+      "dependencies": ["class-variance-authority"],
+      "registryDependencies": ["button", "input", "textarea"],
+      "files": [
+        {
+          "path": "src/components/ui/input-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Tabygen command palette — shadcn geometry, Tabygen brand colors and font. Built on cmdk. Uses the Tabygen Dialog (for CommandDialog) and Input Group internally.",
+      "dependencies": ["cmdk", "lucide-react"],
+      "registryDependencies": ["dialog", "input-group"],
+      "files": [
+        {
+          "path": "src/components/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "combobox",
+      "type": "registry:ui",
+      "title": "Combobox",
+      "description": "Tabygen combobox — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react). Uses the Tabygen Button and Input Group internally.",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["button", "input-group"],
+      "files": [
+        {
+          "path": "src/components/ui/combobox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "breadcrumb",
+      "type": "registry:ui",
+      "title": "Breadcrumb",
+      "description": "Tabygen breadcrumb — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react render/merge-props).",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/breadcrumb.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "navigation-menu",
+      "type": "registry:ui",
+      "title": "Navigation Menu",
+      "description": "Tabygen navigation menu — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react", "class-variance-authority", "lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/navigation-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "Tabygen calendar — shadcn geometry, Tabygen brand colors and font. Built on react-day-picker. Uses the Tabygen Button internally for nav/day cells. Compose with Popover for a date-picker pattern (shadcn's own date-picker isn't a standalone registry item).",
+      "dependencies": ["react-day-picker", "date-fns", "lucide-react"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/components/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Tabygen sheet — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react/dialog). Uses the Tabygen Button internally for its close button.",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/components/ui/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "pagination",
+      "type": "registry:ui",
+      "title": "Pagination",
+      "description": "Tabygen pagination — shadcn geometry, Tabygen brand colors and font. Uses the Tabygen Button internally for page links.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/components/ui/pagination.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "empty",
+      "type": "registry:ui",
+      "title": "Empty",
+      "description": "Tabygen empty state — shadcn geometry, Tabygen brand colors and font. Plain HTML elements, no external primitive.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "src/components/ui/empty.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "spinner",
+      "type": "registry:ui",
+      "title": "Spinner",
+      "description": "Tabygen spinner — shadcn geometry. No color customization (uses currentColor via Lucide's Loader2Icon).",
+      "dependencies": ["lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/spinner.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

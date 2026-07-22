@@ -47,6 +47,16 @@ shadcn-default, per property).
 | [Toggle Group](src/components/ui/toggle-group.tsx) | Base UI (`@base-ui/react/toggle-group`) | No edits needed — same as Button. Pulls in `toggle` as a `registryDependency` automatically | [`public/r/toggle-group.json`](public/r/toggle-group.json) |
 | [Sonner (Toaster)](src/components/ui/sonner.tsx) | `sonner` + `next-themes` (not Base UI) | No edits needed — colors passed through as CSS variables (`--normal-bg: var(--popover)`, etc.), already Figma-sourced. **Integration note:** render `<Toaster />` once at the app root (see below) | [`public/r/sonner.json`](public/r/sonner.json) |
 | [Table](src/components/ui/table.tsx) | Plain HTML elements, no primitive | No edits needed — same as Button | [`public/r/table.json`](public/r/table.json) |
+| [Input Group](src/components/ui/input-group.tsx) | Plain HTML elements + Tabygen Button/Input/Textarea | No edits needed. Pulled in automatically by Command/Combobox, also usable standalone | [`public/r/input-group.json`](public/r/input-group.json) |
+| [Command](src/components/ui/command.tsx) | `cmdk` + Tabygen Dialog/Input Group | No edits needed | [`public/r/command.json`](public/r/command.json) |
+| [Combobox](src/components/ui/combobox.tsx) | Base UI (`@base-ui/react`) + Tabygen Button/Input Group | No edits needed | [`public/r/combobox.json`](public/r/combobox.json) |
+| [Breadcrumb](src/components/ui/breadcrumb.tsx) | Base UI (`@base-ui/react` render/merge-props) | No edits needed | [`public/r/breadcrumb.json`](public/r/breadcrumb.json) |
+| [Navigation Menu](src/components/ui/navigation-menu.tsx) | Base UI (`@base-ui/react/navigation-menu`) | No edits needed | [`public/r/navigation-menu.json`](public/r/navigation-menu.json) |
+| [Calendar](src/components/ui/calendar.tsx) | `react-day-picker` + Tabygen Button | No edits needed. shadcn's `date-picker` is a composed pattern (Calendar + Popover), not a standalone registry item — compose it yourself from these two | [`public/r/calendar.json`](public/r/calendar.json) |
+| [Sheet](src/components/ui/sheet.tsx) | Base UI (`@base-ui/react/dialog`) + Tabygen Button | No edits needed | [`public/r/sheet.json`](public/r/sheet.json) |
+| [Pagination](src/components/ui/pagination.tsx) | Plain HTML + Tabygen Button | No edits needed | [`public/r/pagination.json`](public/r/pagination.json) |
+| [Empty](src/components/ui/empty.tsx) | Plain HTML elements, no primitive | No edits needed | [`public/r/empty.json`](public/r/empty.json) |
+| [Spinner](src/components/ui/spinner.tsx) | Lucide `Loader2Icon`, no primitive | No edits needed — uses `currentColor`, no separate color token | [`public/r/spinner.json`](public/r/spinner.json) |
 
 This table is the source of truth for what exists. If a component isn't listed here,
 it isn't in the registry yet — build it via `/design-component` in this repo first.
