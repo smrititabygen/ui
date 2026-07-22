@@ -33,15 +33,11 @@ above.
 
 ```bash
 npx shadcn@latest init   # base library = Base UI
-npx shadcn@latest add <registry-url>/button.json   # TODO: exact URL/auth not finalized — repo is private, see below
+npx shadcn@latest add https://raw.githubusercontent.com/smrititabygen/ui/main/public/r/button.json
 ```
 
-**Not settled yet:** this repo is private, so `raw.githubusercontent.com` URLs 404 for
-unauthenticated requests — the pull command above doesn't actually work yet. Needs one
-of: making the repo public, an authenticated registry entry in the consuming project's
-`components.json` (shadcn supports per-registry auth headers), or hosting `public/r/`
-somewhere public (e.g. GitHub Pages) while keeping the repo private. Update this section
-once decided.
+This repo is public (verified: the URL above resolves without auth), so no token or
+registry auth config is needed to pull from it.
 
 This copies the file into `src/components/ui/button.tsx` in the product project and
 auto-installs whatever npm packages the registry entry declares as dependencies
