@@ -7,6 +7,14 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Switch } from "@/components/ui/switch"
+import { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
+import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "@/components/ui/select"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
+import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert"
+import { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider } from "@/components/ui/tooltip"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
+import { Skeleton } from "@/components/ui/skeleton"
 import type { VariantProps } from "class-variance-authority"
 import { ArrowRight, Download } from "lucide-react"
 
@@ -105,6 +113,81 @@ function App() {
           </div>
         </div>
       </div>
+
+      <Separator className="my-8" />
+
+      <h2 className="text-lg font-semibold">Batch 3 — overlays, navigation, feedback</h2>
+      <TooltipProvider>
+        <div className="mt-4 flex flex-wrap items-start gap-6">
+          <div className="flex flex-col gap-3">
+            <Dialog>
+              <DialogTrigger render={<Button>Open dialog</Button>} />
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Dialog title</DialogTitle>
+                  <DialogDescription>Dialog description text goes here.</DialogDescription>
+                </DialogHeader>
+                <DialogFooter showCloseButton />
+              </DialogContent>
+            </Dialog>
+
+            <Select defaultValue="one">
+              <SelectTrigger className="w-40">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="one">Option one</SelectItem>
+                <SelectItem value="two">Option two</SelectItem>
+                <SelectItem value="three">Option three</SelectItem>
+              </SelectContent>
+            </Select>
+
+            <Tooltip>
+              <TooltipTrigger render={<Button variant="outline">Hover me</Button>} />
+              <TooltipContent>Tooltip content</TooltipContent>
+            </Tooltip>
+
+            <div className="flex items-center gap-3">
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" alt="Avatar" />
+                <AvatarFallback>TG</AvatarFallback>
+              </Avatar>
+              <Skeleton className="h-8 w-32" />
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <Tabs defaultValue="tab1" className="w-64">
+              <TabsList>
+                <TabsTrigger value="tab1">Tab one</TabsTrigger>
+                <TabsTrigger value="tab2">Tab two</TabsTrigger>
+              </TabsList>
+              <TabsContent value="tab1">Content for tab one.</TabsContent>
+              <TabsContent value="tab2">Content for tab two.</TabsContent>
+            </Tabs>
+
+            <RadioGroup defaultValue="a" className="gap-2">
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="a" id="a" />
+                <Label htmlFor="a">Option A</Label>
+              </div>
+              <div className="flex items-center gap-2">
+                <RadioGroupItem value="b" id="b" />
+                <Label htmlFor="b">Option B</Label>
+              </div>
+            </RadioGroup>
+
+            <Alert>
+              <AlertTitle>Heads up</AlertTitle>
+              <AlertDescription>This is a default alert.</AlertDescription>
+            </Alert>
+            <Alert variant="destructive">
+              <AlertTitle>Something went wrong</AlertTitle>
+              <AlertDescription>This is a destructive alert.</AlertDescription>
+            </Alert>
+          </div>
+        </div>
+      </TooltipProvider>
     </main>
   )
 }

@@ -119,6 +119,111 @@
           "type": "registry:ui"
         }
       ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "Tabygen dialog — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react). Uses the Tabygen Button internally for its close/footer buttons.",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "src/components/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Tabygen select — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react", "lucide-react"],
+      "files": [
+        {
+          "path": "src/components/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "Tabygen tabs — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react", "class-variance-authority"],
+      "files": [
+        {
+          "path": "src/components/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "Tabygen avatar — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Tabygen alert — shadcn geometry, Tabygen brand colors and font. Plain HTML element, no external primitive.",
+      "dependencies": ["class-variance-authority"],
+      "files": [
+        {
+          "path": "src/components/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "Tabygen tooltip — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react). Exports a TooltipProvider that must wrap the consuming app's root (see SKILL.md).",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "radio-group",
+      "type": "registry:ui",
+      "title": "Radio Group",
+      "description": "Tabygen radio group — shadcn geometry, Tabygen brand colors and font. Built on Base UI (@base-ui/react).",
+      "dependencies": ["@base-ui/react"],
+      "files": [
+        {
+          "path": "src/components/ui/radio-group.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Tabygen skeleton — shadcn geometry, Tabygen brand colors (bg-muted). Plain HTML element, no external primitive.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "src/components/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
     }
   ]
 }

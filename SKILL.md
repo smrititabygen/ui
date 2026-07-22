@@ -29,6 +29,14 @@ shadcn-default, per property).
 | [Separator](src/components/ui/separator.tsx) | Base UI (`@base-ui/react/separator`) | No edits needed — same as Button | [`public/r/separator.json`](public/r/separator.json) |
 | [Checkbox](src/components/ui/checkbox.tsx) | Base UI (`@base-ui/react/checkbox`) | No edits needed — same as Button | [`public/r/checkbox.json`](public/r/checkbox.json) |
 | [Switch](src/components/ui/switch.tsx) | Base UI (`@base-ui/react/switch`) | No edits needed — same as Button | [`public/r/switch.json`](public/r/switch.json) |
+| [Dialog](src/components/ui/dialog.tsx) | Base UI (`@base-ui/react/dialog`) | No edits needed — same as Button. Pulls in `button` as a `registryDependency` automatically (Dialog uses Tabygen's Button internally for its close/footer buttons) | [`public/r/dialog.json`](public/r/dialog.json) |
+| [Select](src/components/ui/select.tsx) | Base UI (`@base-ui/react/select`) | No edits needed — same as Button | [`public/r/select.json`](public/r/select.json) |
+| [Tabs](src/components/ui/tabs.tsx) | Base UI (`@base-ui/react/tabs`) | No edits needed — same as Button | [`public/r/tabs.json`](public/r/tabs.json) |
+| [Avatar](src/components/ui/avatar.tsx) | Base UI (`@base-ui/react/avatar`) | No edits needed — same as Button | [`public/r/avatar.json`](public/r/avatar.json) |
+| [Alert](src/components/ui/alert.tsx) | Plain HTML elements, no primitive | No edits needed — same as Button | [`public/r/alert.json`](public/r/alert.json) |
+| [Tooltip](src/components/ui/tooltip.tsx) | Base UI (`@base-ui/react/tooltip`) | No edits needed — same as Button. **Integration note:** exports `TooltipProvider`, which must wrap the consuming app's root (or at least the tree using tooltips) — see the pulling section below | [`public/r/tooltip.json`](public/r/tooltip.json) |
+| [Radio Group](src/components/ui/radio-group.tsx) | Base UI (`@base-ui/react/radio-group`, `@base-ui/react/radio`) | No edits needed — same as Button | [`public/r/radio-group.json`](public/r/radio-group.json) |
+| [Skeleton](src/components/ui/skeleton.tsx) | Plain HTML element, no primitive | No edits needed — same as Button | [`public/r/skeleton.json`](public/r/skeleton.json) |
 
 This table is the source of truth for what exists. If a component isn't listed here,
 it isn't in the registry yet — build it via `/design-component` in this repo first.
@@ -50,6 +58,22 @@ registry auth config is needed to pull from it.
 This copies the file into `src/components/ui/button.tsx` in the product project and
 auto-installs whatever npm packages the registry entry declares as dependencies
 (check `registry.json` here for the current list per component).
+
+Some components declare `registryDependencies` — other Tabygen components they use
+internally. E.g. pulling `dialog` also pulls `button`, since Dialog renders a
+Tabygen Button for its close/footer actions. The `shadcn` CLI resolves this
+automatically; you don't need to pull the dependency yourself.
+
+**Tooltip needs a provider.** After pulling `tooltip`, wrap the part of your app
+that uses tooltips (usually the whole app root) with `TooltipProvider`:
+```tsx
+import { TooltipProvider } from "@/components/ui/tooltip"
+
+function App() {
+  return <TooltipProvider>{/* rest of your app */}</TooltipProvider>
+}
+```
+Without this, `Tooltip`/`TooltipTrigger`/`TooltipContent` will throw at runtime.
 
 ## How tokens map to what you write
 
