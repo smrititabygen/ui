@@ -1,6 +1,6 @@
 {
   "name": "@smrititabygen/ui",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Tabygen global design system — brand tokens, Tailwind preset, and CSS variables for Shadcn/ui",
   "type": "module",
   "exports": {
