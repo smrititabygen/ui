@@ -1,15 +1,19 @@
-# @tabygen/ui — how this system works
+# Tabygen UI — how this system works
 
-For anyone (human or AI agent) working in a project that consumes `@tabygen/ui`.
-For how this repo itself is built, see [ARCHITECTURE.md](ARCHITECTURE.md) (token
-pipeline) and [TOKEN_RULEBOOK.md](TOKEN_RULEBOOK.md) (what's Figma-sourced vs.
-shadcn-default, per property).
+For anyone (human or AI agent) working in a project that consumes this design
+system. For how this repo itself is built, see [ARCHITECTURE.md](ARCHITECTURE.md)
+(token pipeline) and [TOKEN_RULEBOOK.md](TOKEN_RULEBOOK.md) (what's Figma-sourced
+vs. shadcn-default, per property).
 
 ## Two things this repo ships, pulled two different ways
 
-1. **Design tokens** — an npm package (`@tabygen/ui`), published to GitHub Packages.
-   `npm install @tabygen/ui`, then import `@tabygen/ui/variables.css` and/or
-   `@tabygen/ui/tailwind-preset`. Updating: `/design-sync` in the product project.
+1. **Design tokens** — an npm package (`@smrititabygen/ui`), published to GitHub
+   Packages. `npm install @smrititabygen/ui`, then import
+   `@smrititabygen/ui/variables.css` and/or `@smrititabygen/ui/tailwind-preset`.
+   Updating: `/design-sync` in the product project. (Note: the package is scoped
+   `@smrititabygen`, not `@tabygen` — GitHub Packages requires the npm scope to
+   match the actual GitHub account/org, and this repo lives under the
+   `smrititabygen` user, not a `tabygen` org.)
 2. **Components** — pulled individually from this repo's shadcn registry, **not**
    npm-installed and **not** generic `npx shadcn@latest add <component>` (that
    would get unbranded upstream shadcn source instead of the version checked
@@ -141,7 +145,7 @@ Then trigger toasts from anywhere with `import { toast } from "sonner"` and
 
 ## How tokens map to what you write
 
-Once `@tabygen/ui/variables.css` is imported, every component pulled from this
+Once `@smrititabygen/ui/variables.css` is imported, every component pulled from this
 registry already uses the right classes — you don't need to think about hex values.
 For your *own* custom UI in a product project (not a pulled component), use:
 

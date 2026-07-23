@@ -1,6 +1,6 @@
-# @tabygen/ui
+# Tabygen UI
 
-Tabygen's global design system — brand tokens and a shadcn-compatible component registry, built once here and reused across every Tabygen product. See Status below for what's actually done, [ARCHITECTURE.md](ARCHITECTURE.md) for the exact token flow end to end, and [SKILL.md](SKILL.md) for how a product project actually consumes this (component inventory, pull commands).
+Tabygen's global design system — brand tokens (npm package `@smrititabygen/ui`) and a shadcn-compatible component registry, built once here and reused across every Tabygen product. See Status below for what's actually done, [ARCHITECTURE.md](ARCHITECTURE.md) for the exact token flow end to end, and [SKILL.md](SKILL.md) for how a product project actually consumes this (component inventory, pull commands).
 
 ## Status
 
@@ -29,12 +29,12 @@ This repo's own `src/index.css` imports `variables.css` directly, so the Vite ap
 ### Using the tokens in a product repo
 
 ```bash
-npm install @tabygen/ui
+npm install @smrititabygen/ui
 ```
 
 ```js
 // tailwind.config.js
-import tgPreset from '@tabygen/ui/tailwind-preset'
+import tgPreset from '@smrititabygen/ui/tailwind-preset'
 export default {
   presets: [tgPreset],
   // ...
@@ -43,7 +43,7 @@ export default {
 
 ```css
 /* globals.css */
-@import '@tabygen/ui/variables.css';
+@import '@smrititabygen/ui/variables.css';
 ```
 
 ### Updating tokens from Figma

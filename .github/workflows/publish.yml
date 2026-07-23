@@ -20,12 +20,12 @@ jobs:
         with:
           node-version: '20'
           registry-url: 'https://npm.pkg.github.com'
-          scope: '@tabygen'
+          scope: '@smrititabygen'
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Publish @tabygen/ui
+      - name: Publish @smrititabygen/ui
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

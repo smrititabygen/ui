@@ -1,5 +1,5 @@
 {
-  "name": "@tabygen/ui",
+  "name": "@smrititabygen/ui",
   "version": "0.2.0",
   "description": "Tabygen global design system — brand tokens, Tailwind preset, and CSS variables for Shadcn/ui",
   "type": "module",
@@ -57,6 +57,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tabygen/ui.git"
+    "url": "https://github.com/smrititabygen/ui.git"
   }
 }
