@@ -4,7 +4,9 @@ Tabygen's global design system — brand tokens (npm package `@smrititabygen/ui`
 
 ## Status
 
-🟢 Core component catalog complete. Tokens (light + dark), the shadcn/Vite app shell, and the registry are live with all 56 non-chat shadcn components. Skipped: chat-specific components (Bubble, Message, Message Scroller, Marker, Attachment), Toast (superseded by Sonner), and three that aren't real standalone registry items (Date Picker, Data Table, Typography — see [`SKILL.md`](SKILL.md) for how to compose the first two). Only remaining roadmap item: test-pulling into a second project.
+🟢 Core roadmap complete. Tokens (light + dark), the shadcn/Vite app shell, and the registry are live with all 56 non-chat shadcn components, and the whole pipeline has been proven end to end in a second, real project. Skipped: chat-specific components (Bubble, Message, Message Scroller, Marker, Attachment), Toast (superseded by Sonner), and three that aren't real standalone registry items (Date Picker, Data Table, Typography — see [`SKILL.md`](SKILL.md) for how to compose the first two).
+
+⚠️ **Known open item:** the `@smrititabygen/ui` npm token package cannot currently publish to GitHub Packages — `GITHUB_TOKEN` can't write packages on this personal (non-org) repo even with `packages: write` permission and workflow write-permissions enabled. Needs a classic PAT with `write:packages` scope added as a repo secret (e.g. `NPM_PUBLISH_TOKEN`), then `.github/workflows/publish.yml` updated to use it instead of `GITHUB_TOKEN`. Until then, consuming projects should pull `tokens/generated/variables.css` directly (e.g. copy it in, or reference the raw GitHub URL) rather than via `npm install` — this is what the test-pull project (`dtms/frontend`) does today.
 
 | Piece | Status | Where |
 |---|---|---|
@@ -14,7 +16,8 @@ Tabygen's global design system — brand tokens (npm package `@smrititabygen/ui`
 | Components customized to match Figma | ✅ 56 of 56 in-scope components — see [`SKILL.md`](SKILL.md) component inventory | [`SKILL.md`](SKILL.md) component inventory |
 | `registry.json` (makes this pullable by other projects) | ✅ Done | [`registry.json`](registry.json), [`public/r/`](public/r/) |
 | `SKILL.md` documenting the system for consumers | ✅ Done | [`SKILL.md`](SKILL.md) |
-| Test-pulled into a second project to confirm the loop works | ⬜ Not started | — |
+| Test-pulled into a second project to confirm the loop works | ✅ Done — `dtms/frontend`, Button/Input/Label/Alert pulled and verified live | — |
+| `@smrititabygen/ui` npm token package actually publishing | ⚠️ Blocked — needs a PAT, see above | [`.github/workflows/publish.yml`](.github/workflows/publish.yml) |
 
 ## What's here today
 
@@ -79,6 +82,24 @@ Publishing happens automatically via [`.github/workflows/publish.yml`](.github/w
 3. ~~Customize each component to match Figma~~ ✅ Done — 56 of 56 in-scope components, see [`SKILL.md`](SKILL.md)'s component inventory. Default policy (see `TOKEN_RULEBOOK.md`): keep shadcn's geometry, only confirm color/font already resolve through Tabygen's tokens (Slider's thumb was the one real exception — see `TOKEN_RULEBOOK.md` Section 5).
 4. ~~Set up `registry.json`~~ ✅ Done — [`registry.json`](registry.json) + `npm run registry:build` → [`public/r/`](public/r/), reachable via raw GitHub URLs now that this repo is public (verified working).
 5. ~~Write `SKILL.md`~~ ✅ Done — [`SKILL.md`](SKILL.md).
-6. **Test-pull into a second project** — the only item left. Confirms the full loop (tokens → components → registry → consuming app) actually works end to end. Both consuming projects will be initialized with Base UI to match this registry.
+6. ~~Test-pull into a second project~~ ✅ Done — `dtms/frontend` (a real Jindal Steel DTMS product project). Its `shadcn init` was originally Radix-based (the shadcn default) and had to be switched to Base UI (`components.json` `style: "base-nova"`) before pulling; Button/Input/Label/Alert were pulled from this repo's registry and verified rendering correctly on a real login page. Tokens were wired via a direct copy of `variables.css` rather than `npm install`, since the npm package currently can't publish — see the "Known open item" note above.
+
+## Setting up a new consuming project
+
+Plain `npx shadcn@latest init` defaults to Radix, not Base UI — pulling a component
+from this registry into a Radix-initialized project installs fine but references a
+primitive library (`@base-ui/react`) the project never has, so nothing actually
+works until this is fixed. Use the explicit preset instead:
+
+```bash
+npx shadcn@latest init --template vite --preset base-nova
+```
+
+If a project was already `init`'d with the wrong base (as `dtms/frontend` was),
+fix it after the fact by setting `components.json`'s `"style"` to `"base-nova"`
+and `"baseColor"` to `"neutral"`, installing `@base-ui/react`, and re-pulling
+(with `--overwrite`) any components that were previously added on Radix. Always
+check `components.json` before running a pull command — don't assume a project's
+existing `shadcn init` already matches this registry.
 
 Component work now follows `/design-component` (in `~/.agents/skills/design-component/`) rather than the ad-hoc steps above.
